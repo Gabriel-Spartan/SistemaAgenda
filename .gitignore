@@ -1,0 +1,38 @@
+# IGNORAR ARCHIVOS DE COMPILACIÓN Y SALIDA
+
+/build/
+/dist/
+
+# Ignorar archivos compilados de Java
+*.class
+
+# Ignorar archivos .jar y .war generados automáticamente
+*.jar
+*.war
+
+# IGNORAR ARCHIVOS DE NETBEANS
+
+# Configuración privada del proyecto (datos locales de usuario)
+nbproject/private/
+
+# Archivos generados automáticamente por NetBeans (se pueden regenerar)
+nbproject/genfiles.properties
+nbproject/build-impl.xml
+
+# IGNORAR ARCHIVOS TEMPORALES
+
+*.log
+*.tmp
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# DOCUMENTACIÓN Y LIBRERÍAS
+
+# Si usas una carpeta con librerías externas
+/lib/*.jar
+
+# Si usas Obsidian para documentación
+/documentation/.obsidian/
+documentation/.trash/
