@@ -1,8 +1,10 @@
+// autor: gabriel0llerena@gmail.com/Gabriel-Spartan
 package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import model.Usuario;
 import util.ConexionBD;
 
@@ -11,8 +13,7 @@ public class UsuarioDAO {
     public boolean registrarUsuario(Usuario usuario) {
         String sql = "INSERT INTO USUARIOS (ID_USU, NOM_USU, APE_USU, CON_USU) VALUES (?, ?, ?, ?)";
 
-        try (Connection con = ConexionBD.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, usuario.getIdUsu());
             ps.setString(2, usuario.getNomUsu());
@@ -26,4 +27,21 @@ public class UsuarioDAO {
             return false;
         }
     }
+
+    public boolean existeUsuario(String idUsu) {
+        String sql = "SELECT 1 FROM USUARIOS WHERE ID_USU = ?";
+
+        try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, idUsu);
+            ResultSet rs = ps.executeQuery();
+
+            return rs.next(); // Retorna true si hay coincidencia
+
+        } catch (SQLException e) {
+            System.err.println("❌ Error al verificar existencia: " + e.getMessage());
+            return false;
+        }
+    }
+
 }

@@ -1,3 +1,4 @@
+// autor: gabriel0llerena@gmail.com/Gabriel-Spartan
 package model;
 
 import java.sql.Date;
