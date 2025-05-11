@@ -70,6 +70,7 @@ git clone https://github.com/Gabriel-Spartan/SistemaAgenda.git
 cd SistemaAgenda
 ```
 📄 Crear el archivo project.properties en nbproject/
+Tener en cuenta que debe modificar las lineas `javac.source` y `javac.target` esto segun el `JDK` que este ocupando por defecto esta en el 23
 Esto permite cargar automáticamente los .jar desde /lib/ y compilar el proyecto correctamente:
 
 ```
@@ -99,6 +100,10 @@ dist.archive.excludes=
 includes=**
 excludes=
 jar.compress=false
+
+# === JDK ESPECIFICADO PARA EL TRABAJO ===
+javac.source=23
+javac.target=23
 
 # === LIBRERÍAS EXTERNAS ===
 file.reference.mysql-connector-j-9.3.0.jar=lib/mysql-connector-j-9.3.0.jar
@@ -177,9 +182,7 @@ Asegúrate de tener instaladas las siguientes herramientas:
 -Java JDK 23
 -XAMPP (MySQL)
 -IDE (preferiblemente NetBeans o IntelliJ con soporte para Java Swing)
--Git
 -Librerías externas en /lib (ya incluidas en el repositorio)
--Obsidian (opcional, para lectura/edición de documentación técnica)
 
 🛠️ Configurar el JDK en NetBeans
 Si tu sistema no tiene JDK 23, puedes usar uno compatible. Verifica o cambia el JDK activo en:
