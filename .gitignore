@@ -2,10 +2,6 @@
 # IGNORAR TODO EN /build/
 build/
 
-# PERMITIR SOLO .class en /build/classes
-!build/classes/
-!build/classes/**/*.class
-
 /dist/
 
 # Ignorar archivos compilados de Java
