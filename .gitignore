@@ -43,6 +43,9 @@ Thumbs.db
 /documentation/.obsidian/
 documentation/.trash/
 
+# Ignorar las variables de entorno
+.env
+
 # No ignorar los .jar de la carpeta lib
 !/lib/
 !/lib/*.jar
