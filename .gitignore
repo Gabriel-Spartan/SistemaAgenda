@@ -40,3 +40,4 @@ documentation/.trash/
 
 # No ignorar los .jar de la carpeta lib
 !/lib/
+!/lib/*.jar
