@@ -51,7 +51,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     // Conexion rapida
     private void conexion() {
-        String cedulaBuscada = "1805071469"; // Reemplaza por cualquier cédula que tengas en tu base
+        String cedulaBuscada = "1801478692"; // Reemplaza por cualquier cédula que tengas en tu base
 
         try (Connection con = ConexionBD.conectar()) {
             // 1. Consultar usuario
