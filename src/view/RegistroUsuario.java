@@ -1,8 +1,16 @@
+
 package view;
 
 import controller.RegistroController;
+import dao.EventoDAO;
 import javax.swing.JOptionPane;
 import model.Usuario;
+
+// Eliminar una ves terminado
+import java.sql.*;
+import java.util.List;
+import model.Evento;
+import util.ConexionBD;
 
 public class RegistroUsuario extends javax.swing.JFrame {
 
@@ -10,6 +18,8 @@ public class RegistroUsuario extends javax.swing.JFrame {
         initComponents();
     }
 
+    
+    
     public static void main(String[] args) {
         RegistroUsuario ventana = new RegistroUsuario();
         ventana.setLocationRelativeTo(null);
@@ -216,18 +226,18 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     private void jChkBoxVerContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChkBoxVerContraseniaActionPerformed
         if (jChkBoxVerContrasenia.isSelected()) {
-             // Mostrar contraseña
+            // Mostrar contraseña
             jPwdContrasenia.setEchoChar((char) 0);
             jPwdConfirmaContrasenia.setEchoChar((char) 0);
         } else {
-             // Ocultar contraseña
+            // Ocultar contraseña
             jPwdContrasenia.setEchoChar('•');
             jPwdConfirmaContrasenia.setEchoChar('•');
         }
     }//GEN-LAST:event_jChkBoxVerContraseniaActionPerformed
 
     private void jTxtCedulaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtCedulaKeyPressed
-        
+
     }//GEN-LAST:event_jTxtCedulaKeyPressed
 
     private void jTxtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtCedulaKeyTyped
@@ -240,11 +250,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtCedulaKeyTyped
 
     private String capitalizar(String texto) {
-        if (texto.isEmpty()) {
-            return texto;
-        }
-        return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
+    if (texto.isEmpty()) {
+        return texto;
     }
+    return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnLogin;
