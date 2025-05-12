@@ -1,18 +1,20 @@
-// autor: gabriel0llerena@gmail.com/Gabriel-Spartan
 package model;
 
 import java.sql.Date;
 import java.sql.Time;
 
 public class Evento {
-    private String idUsuPer;  // FK a USUARIOS(ID_USU)
-    private Date fecEve;
-    private Time horEve;
-    private String titEve;
-    private String desEve;
 
+    private String idUsuPer;   // Clave foránea a USUARIOS(ID_USU)
+    private Date fecEve;       // Fecha del evento
+    private Time horEve;       // Hora del evento
+    private String titEve;     // Título del evento
+    private String desEve;     // Descripción del evento
+
+    // Constructor vacío (obligatorio para frameworks o herramientas como JasperReports)
     public Evento() {}
 
+    // Constructor completo
     public Evento(String idUsuPer, Date fecEve, Time horEve, String titEve, String desEve) {
         this.idUsuPer = idUsuPer;
         this.fecEve = fecEve;
@@ -21,8 +23,9 @@ public class Evento {
         this.desEve = desEve;
     }
 
+    // Getters y Setters
     public String getIdUsuPer() {
-        return idUsuPer;
+        return this.idUsuPer;
     }
 
     public void setIdUsuPer(String idUsuPer) {
@@ -30,7 +33,7 @@ public class Evento {
     }
 
     public Date getFecEve() {
-        return fecEve;
+        return this.fecEve;
     }
 
     public void setFecEve(Date fecEve) {
@@ -38,7 +41,7 @@ public class Evento {
     }
 
     public Time getHorEve() {
-        return horEve;
+        return this.horEve;
     }
 
     public void setHorEve(Time horEve) {
@@ -46,7 +49,7 @@ public class Evento {
     }
 
     public String getTitEve() {
-        return titEve;
+        return this.titEve;
     }
 
     public void setTitEve(String titEve) {
@@ -54,10 +57,21 @@ public class Evento {
     }
 
     public String getDesEve() {
-        return desEve;
+        return this.desEve;
     }
 
     public void setDesEve(String desEve) {
         this.desEve = desEve;
+    }
+
+    @Override
+    public String toString() {
+        return "Evento{" +
+                "Usuario='" + this.idUsuPer + '\'' +
+                ", Fecha=" + this.fecEve +
+                ", Hora=" + this.horEve +
+                ", Título='" + this.titEve + '\'' +
+                ", Descripción='" + this.desEve + '\'' +
+                '}';
     }
 }
