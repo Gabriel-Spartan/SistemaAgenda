@@ -41,3 +41,21 @@ INSERT INTO EVENTOS (ID_USU_PER, FEC_EVE, HOR_EVE, TIT_EVE, DES_EVE) VALUES
 ('0665432109', STR_TO_DATE('25/05/2025', '%d/%m/%Y'), '16:00:00', 'Partido Amistoso', 'Cancha municipal'),
 ('0554321098', STR_TO_DATE('26/05/2025', '%d/%m/%Y'), '14:30:00', 'Clase de Música', 'Clases de piano'),
 ('0443210987', STR_TO_DATE('26/05/2025', '%d/%m/%Y'), '09:30:00', 'Prueba Técnica', 'Entrevista con empresa de software');
+
+/*nuevos datos:*/
+INSERT INTO USUARIOS (ID_USU, NOM_USU, APE_USU, CON_USU)
+VALUES ('1801478692', 'Paola', 'Martinez', 'Pao123');
+
+INSERT INTO USUARIOS (ID_USU, NOM_USU, APE_USU, CON_USU)
+VALUES ('1807897654', 'Mario', 'Lopez', 'Ma123');
+
+INSERT INTO USUARIOS (ID_USU, NOM_USU, APE_USU, CON_USU)
+VALUES ('1787654654', 'Monica', 'Pérez', 'M01');
+
+
+INSERT INTO EVENTOS (ID_USU_PER, FEC_EVE, HOR_EVE, TIT_EVE, DES_EVE) VALUES
+('1801478692', '2025-05-27', '09:00:00', 'Presentación de Proyecto', 'Entrega final del proyecto de computación visual en el aula magna.'),
+('1801478692', '2025-05-28', '14:30:00', 'Reunión de Seguimiento', 'Revisión de avances y asignación de nuevas tareas con el equipo de desarrollo.');
+INSERT INTO EVENTOS (ID_USU_PER, FEC_EVE, HOR_EVE, TIT_EVE, DES_EVE) VALUES
+('1801478692', '2025-05-29', '08:00:00', 'Desayuno con Coordinador', 'Reunión informal para revisar lineamientos del nuevo semestre.'),
+('1801478692', '2025-05-29', '11:15:00', 'Defensa de Proyecto', 'Presentación final ante el tribunal académico en el auditorio 2.');
