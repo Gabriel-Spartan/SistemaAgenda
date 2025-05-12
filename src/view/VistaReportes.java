@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
+import controller.ReporteController;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -19,32 +16,25 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import session.UsuarioActivo;
 import util.ConexionBD;
+import exception.ExcepcionVista;
 
-/**
- *
- * @author DELL
- */
 public class VistaReportes extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VistaReportes
-     */
     public VistaReportes() {
         initComponents();
-        
-String[] meses = {
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-};
-jCbxDias.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
 
-int anioActual = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-jSpnAnio.setValue(anioActual);
+        String[] meses = {
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        };
+        jCbxDias.setModel(new javax.swing.DefaultComboBoxModel<>(meses));
 
+        int anioActual = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        jSpnAnio.setValue(anioActual);
 
         if (!session.UsuarioActivo.haySesionActiva()) {
             model.Usuario usuarioSimulado = new model.Usuario(
-                    "1801478692", "Paola", "Martinez", "Pao123"
+                    "0665432109", "Melanie", "Gomez", "melaClave"
             );
             session.UsuarioActivo.iniciarSesion(usuarioSimulado, null);
             System.out.println("✅ Sesión simulada para: " + usuarioSimulado.getNomUsu());
@@ -54,77 +44,47 @@ jSpnAnio.setValue(anioActual);
 
     }
 
-    private void generarReportePorDia() {
-    try {
-        java.util.Date fecha = jDchReporteDia.getDate();
-        if (fecha == null || !UsuarioActivo.haySesionActiva()) {
-            JOptionPane.showMessageDialog(this, "Selecciona una fecha válida e inicia sesión.");
-            return;
-        }
-
-        String cedula = UsuarioActivo.getUsuarioActual().getIdUsu();
-        Date fechaSQL = new Date(fecha.getTime());
-
-        // Carga desde ruta absoluta (solo mientras desarrollas)
-        File file = new File("src/reportes/reporteDia.jasper");
-        InputStream input = new FileInputStream(file);
-
-        JasperReport reporte = (JasperReport) JRLoader.loadObject(input);
-
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("fecha", fechaSQL);
-        parametros.put("usuario_id", cedula);
-
-        Connection conn = ConexionBD.conectar();
-        JasperPrint print = JasperFillManager.fillReport(reporte, parametros, conn);
-        JasperViewer.viewReport(print, false);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al generar el reporte por día.\n" + e.getMessage());
-    }
-}
-
-
     private void generarReportePorMes() {
-    try {
-        int mes = jCbxDias.getSelectedIndex() + 1;
-        int anio = (int) jSpnAnio.getValue();
+        try {
+            // Obtener mes y año desde los componentes visuales
+            int mes = jCbxDias.getSelectedIndex() + 1;
+            int anio = (int) jSpnAnio.getValue();
 
-        if (!UsuarioActivo.haySesionActiva()) {
-            JOptionPane.showMessageDialog(this, "No hay sesión activa.");
-            return;
+            // Validar sesión
+            if (!UsuarioActivo.haySesionActiva()) {
+                JOptionPane.showMessageDialog(this, "⚠️ No hay sesión activa.");
+                return;
+            }
+
+            // Obtener cédula del usuario actual
+            String cedula = UsuarioActivo.getUsuarioActual().getIdUsu();
+
+            // Cargar el archivo .jasper compilado (NO .jrxml)
+            File archivoReporte = new File("src/reportes/reporteMes.jasper");
+            InputStream input = new FileInputStream(archivoReporte);
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(input);
+
+            // Parámetros que requiere el reporte
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("mes", mes);
+            parametros.put("anio", anio);
+            parametros.put("usuario_id", cedula);
+
+            // Obtener la conexión a la base de datos
+            Connection conexion = ConexionBD.conectar();
+
+            // Llenar y mostrar el reporte
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, conexion);
+            JasperViewer.viewReport(print, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "❌ Error al generar el reporte por mes.\n" + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        String cedula = UsuarioActivo.getUsuarioActual().getIdUsu();
-
-        // Usa ruta absoluta como en el método por día
-        File file = new File("src/reportes/reporteMes.jasper");
-        InputStream input = new FileInputStream(file);
-
-        JasperReport reporte = (JasperReport) JRLoader.loadObject(input);
-
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("mes", mes);
-        parametros.put("anio", anio);
-        parametros.put("usuario_id", cedula);
-
-        Connection conn = ConexionBD.conectar();
-        JasperPrint print = JasperFillManager.fillReport(reporte, parametros, conn);
-        JasperViewer.viewReport(print, false);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al generar el reporte por mes.\n" + e.getMessage());
     }
-}
 
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -245,13 +205,34 @@ jSpnAnio.setValue(anioActual);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnReporteDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnReporteDiaActionPerformed
-        // TODO add your handling code here:
-        generarReportePorDia();
+        try {
+            Date fecha = jDchReporteDia.getDate();
+            controller.ReporteController.generarPorDia(fecha);
+        } catch (ExcepcionVista ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), ex.getTitulo(), JOptionPane.WARNING_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "❌ Error inesperado al generar el reporte por mes.\n" + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnReporteDiaActionPerformed
 
     private void jBtnReporteMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnReporteMesActionPerformed
-        // TODO add your handling code here:
-        generarReportePorMes();
+        try {
+            int mes = jCbxDias.getSelectedIndex() + 1;
+            int anio = (int) jSpnAnio.getValue();
+
+            ReporteController.generarPorMes(mes, anio);
+
+        } catch (ExcepcionVista ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), ex.getTitulo(), JOptionPane.WARNING_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "❌ Error inesperado al generar el reporte por mes.\n" + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnReporteMesActionPerformed
 
     /**
