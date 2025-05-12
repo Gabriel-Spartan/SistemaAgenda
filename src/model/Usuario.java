@@ -1,4 +1,3 @@
-// autor: gabriel0llerena@gmail.com/Gabriel-Spartan
 package model;
 
 public class Usuario {
@@ -48,5 +47,10 @@ public class Usuario {
 
     public void setConUsu(String conUsu) {
         this.conUsu = conUsu;
+    }
+    
+    @Override
+    public String toString() {
+        return this.nomUsu + " " + this.apeUsu;
     }
 }
