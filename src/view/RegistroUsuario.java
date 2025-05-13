@@ -1,30 +1,12 @@
-
 package view;
 
 import controller.RegistroController;
-import dao.EventoDAO;
 import javax.swing.JOptionPane;
-import model.Usuario;
-
-// Eliminar una ves terminado
-import java.sql.*;
-import java.util.List;
-import model.Evento;
-import util.ConexionBD;
 
 public class RegistroUsuario extends javax.swing.JFrame {
 
     public RegistroUsuario() {
         initComponents();
-    }
-
-    
-    
-    public static void main(String[] args) {
-        RegistroUsuario ventana = new RegistroUsuario();
-        ventana.setLocationRelativeTo(null);
-        ventana.setResizable(false);
-        ventana.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -199,7 +181,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
             RegistroController controller = new RegistroController();
 
             // Validación + creación
-            Usuario u = new Usuario(cedula, nombre, apellido, contrasenia);
+            model.Usuario u = new model.Usuario(cedula, nombre, apellido, contrasenia);
             String mensaje = controller.validarYRegistrar(u, confirma);
 
             JOptionPane.showMessageDialog(this, mensaje);
@@ -250,11 +232,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtCedulaKeyTyped
 
     private String capitalizar(String texto) {
-    if (texto.isEmpty()) {
-        return texto;
+        if (texto.isEmpty()) {
+            return texto;
+        }
+        return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
     }
-    return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnLogin;
