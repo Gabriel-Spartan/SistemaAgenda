@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
-/**
- *
- * @author USUARIO
- */
-
 import dao.LoginDAO;
+import java.util.List;
 
 public class LoginController {
 
@@ -26,5 +18,19 @@ public class LoginController {
 
         boolean valido = loginDAO.validarUsuario(cedula, password);
         return valido ? "✅ Bienvenido al sistema" : "❌ Usuario o contraseña incorrecta";
+    }
+    
+    public String iniciarSesion(String cedula, String contrasena) {
+        dao.UsuarioDAO usuarioDAO = new dao.UsuarioDAO();
+        dao.EventoDAO eventoDAO = new dao.EventoDAO();
+
+        model.Usuario usuario = usuarioDAO.obtenerPorCedula(cedula);
+        if (usuario == null || !usuario.getConUsu().equals(contrasena)) {
+            return "❌ Credenciales inválidas.";
+        }
+
+        List<model.Evento> eventos = eventoDAO.obtenerEventosPorUsuario(cedula);
+        session.UsuarioActivo.iniciarSesion(usuario, eventos);
+        return "✅ Sesión iniciada correctamente";
     }
 }

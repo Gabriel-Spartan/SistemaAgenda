@@ -25,7 +25,7 @@ public class UsuarioActivo {
         return eventosDelUsuario;
     }
 
-    public static void cerrarSesion() {
+        public static void cerrarSesion() {
         usuarioActual = null;
         eventosDelUsuario = null;
     }
