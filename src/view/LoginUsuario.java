@@ -12,17 +12,16 @@ public class LoginUsuario extends javax.swing.JFrame {
 
     private static final Color COLOR_FONDO_GENERAL = new Color(39, 39, 43);
     private static final Color COLOR_PANEL = new Color(153, 153, 153);
-    private static final Color COLOR_CAMPO_TEXTO = new Color(135, 152, 163);
+    private static final Color COLOR_CAMPO_TEXTO = new Color(205, 205, 210);
     private static final Color COLOR_TEXTO = Color.BLACK;
 
-    private static final Color COLOR_BTN_INGRESAR = new Color(173, 179, 183);
-    private static final Color COLOR_BTN_INGRESAR_HOVER = new Color(210, 210, 210);
+    private static final Color COLOR_BTN_INGRESAR = new Color(135, 178, 158);
+    private static final Color COLOR_BTN_INGRESAR_HOVER = new Color(96, 187, 144);
 
-    private static final Color COLOR_BTN_REGISTRARSE = new Color(124, 124, 132);
-    private static final Color COLOR_BTN_REGISTRARSE_HOVER = new Color(179, 179, 182);
-    
+    private static final Color COLOR_BTN_REGISTRARSE = new Color(106, 113, 133);
+    private static final Color COLOR_BTN_REGISTRARSE_HOVER = new Color(136, 148, 179);
+
     private static int contadorError = 0;
-
 
     public LoginUsuario() {
         initComponents();
@@ -65,7 +64,9 @@ public class LoginUsuario extends javax.swing.JFrame {
 
         // Botones
         configurarBotonHover(jBtnIngresar, COLOR_BTN_INGRESAR, COLOR_BTN_INGRESAR_HOVER);
+        jBtnIngresar.setFont(new Font("Yet R", Font.PLAIN, 14));
         configurarBotonHover(jBtnRegistrarse, COLOR_BTN_REGISTRARSE, COLOR_BTN_REGISTRARSE_HOVER);
+        jBtnRegistrarse.setFont(new Font("Yet R", Font.PLAIN, 14));
 
         // Checkbox
         jtbVerContrasenia.setText("👁");
@@ -108,31 +109,44 @@ public class LoginUsuario extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void mostrarErrorConImagen(String mensaje) {
-    String[] imagenes = {
-        "/resources/img/erroranime1.png",
-        "/resources/img/erroranime2.png",
-        "/resources/img/erroranime3.png"
-    };
+        String[] imagenes = {
+            "/resources/img/erroranime1.png",
+            "/resources/img/erroranime2.png",
+            "/resources/img/erroranime3.png"
+        };
 
-    String ruta = imagenes[contadorError % imagenes.length];
-    java.net.URL url = getClass().getResource(ruta);
+        String ruta = imagenes[contadorError % imagenes.length];
+        java.net.URL url = getClass().getResource(ruta);
 
-    if (url != null) {
-        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(url);
-        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(175, 175, java.awt.Image.SCALE_SMOOTH);
-        javax.swing.ImageIcon icono = new javax.swing.ImageIcon(imagenEscalada);
-        JOptionPane.showMessageDialog(this, mensaje, "Error de autenticación", JOptionPane.ERROR_MESSAGE, icono);
-    } else {
-        // Si no se encuentra la imagen, mostrar sin ícono personalizado
-        JOptionPane.showMessageDialog(this, mensaje, "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+        if (url != null) {
+            javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(url);
+            java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(175, 175, java.awt.Image.SCALE_SMOOTH);
+            javax.swing.ImageIcon icono = new javax.swing.ImageIcon(imagenEscalada);
+            JOptionPane.showMessageDialog(this, mensaje, "Error de autenticación", JOptionPane.ERROR_MESSAGE, icono);
+        } else {
+            // Si no se encuentra la imagen, mostrar sin ícono personalizado
+            JOptionPane.showMessageDialog(this, mensaje, "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+        }
+
+        contadorError++;
     }
 
-    contadorError++;
-}
+    private void mostrarExitoConImagen(String mensaje) {
+        String ruta = "/resources/img/exito.png";
+        java.net.URL url = getClass().getResource(ruta);
 
-
+        if (url != null) {
+            javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(url);
+            java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(175, 175, java.awt.Image.SCALE_SMOOTH);
+            javax.swing.ImageIcon icono = new javax.swing.ImageIcon(imagenEscalada);
+            JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE, icono);
+        } else {
+            // Si no se encuentra la imagen, mostrar sin ícono personalizado
+            JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 
     //BackEnd
     private void realizarLogin() {
@@ -143,7 +157,7 @@ public class LoginUsuario extends javax.swing.JFrame {
         String mensaje = controller.iniciarSesion(cedula, contrasena);
 
         if (mensaje.startsWith("✅")) {
-            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. ¡Bienvenido!", "Acceso permitido", JOptionPane.INFORMATION_MESSAGE);
+            mostrarExitoConImagen("Inicio de sesión exitoso. ¡Bienvenido!");
             this.dispose();
             new VistaPrincipal().setVisible(true);
         } else {
@@ -182,6 +196,7 @@ public class LoginUsuario extends javax.swing.JFrame {
         jlbTitulo.setText("INICIAR SESIÓN");
         jPanel1.add(jlbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
+        jTxtCedula.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTxtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTxtCedulaKeyTyped(evt);
@@ -189,6 +204,8 @@ public class LoginUsuario extends javax.swing.JFrame {
         });
         jPanel1.add(jTxtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 200, 30));
 
+        jBtnIngresar.setFont(new java.awt.Font("Yet R", 0, 14)); // NOI18N
+        jBtnIngresar.setForeground(new java.awt.Color(0, 0, 0));
         jBtnIngresar.setText("Ingresar");
         jBtnIngresar.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         jBtnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +215,8 @@ public class LoginUsuario extends javax.swing.JFrame {
         });
         jPanel1.add(jBtnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 90, 30));
 
+        jBtnRegistrarse.setFont(new java.awt.Font("Yet R", 0, 14)); // NOI18N
+        jBtnRegistrarse.setForeground(new java.awt.Color(0, 0, 0));
         jBtnRegistrarse.setText("Registrarse");
         jBtnRegistrarse.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         jBtnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
@@ -207,6 +226,7 @@ public class LoginUsuario extends javax.swing.JFrame {
         });
         jPanel1.add(jBtnRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 325, 110, 30));
 
+        jPwdContrasenia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPwdContrasenia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPwdContraseniaActionPerformed(evt);
@@ -224,7 +244,7 @@ public class LoginUsuario extends javax.swing.JFrame {
         jPanel1.add(jtbVerContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 50, 30));
 
         jlbRegistrarse.setText("¿No tienes una cuenta?");
-        jPanel1.add(jlbRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
+        jPanel1.add(jlbRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
 
         jSeparator1.setBackground(new java.awt.Color(102, 102, 102));
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -241,7 +261,9 @@ public class LoginUsuario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -281,7 +303,10 @@ public class LoginUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbVerContraseniaActionPerformed
 
     private void jPwdContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPwdContraseniaActionPerformed
-        // TODO add your handling code here:
+        //si el foco está en jPwdContrasenia y se presiona Enter, se ejecutará la lógica de 
+        //autenticación directamente, manteniendo el mismo flujo que si se presionara el botón Ingresar.
+
+        realizarLogin();
     }//GEN-LAST:event_jPwdContraseniaActionPerformed
 
     /**
