@@ -4,9 +4,8 @@ import controller.LoginController;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.io.File;
+import java.awt.Toolkit;
 import java.io.InputStream;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class LoginUsuario extends javax.swing.JFrame {
@@ -21,15 +20,17 @@ public class LoginUsuario extends javax.swing.JFrame {
 
     private static final Color COLOR_BTN_REGISTRARSE = new Color(124, 124, 132);
     private static final Color COLOR_BTN_REGISTRARSE_HOVER = new Color(179, 179, 182);
+    
+    private static int contadorError = 0;
+
 
     public LoginUsuario() {
         initComponents();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/img/icono.png")));
         this.setSize(350, 420);
         this.setLocationRelativeTo(null);
         disenioInterfaz();
         getRootPane().setDefaultButton(jBtnIngresar);
-        System.out.println(getClass().getResource("/resources/img/icono.png"));
-
 
     }
 
@@ -44,32 +45,16 @@ public class LoginUsuario extends javax.swing.JFrame {
         configurarEtiqueta(jlbRegistrarse);
 
         // Fuente personalizada para el título
-        try {
-            Font creepyFont = null;
-
-            // Intentar cargar desde recursos empaquetados
-            InputStream is = getClass().getClassLoader().getResourceAsStream("resources/fonts/Creepy.ttf");
+        try (InputStream is = getClass().getResourceAsStream("/resources/fonts/Creepy.ttf")) {
             if (is != null) {
-                creepyFont = Font.createFont(Font.TRUETYPE_FONT, is);
-            } else {
-                // Cargar desde archivo local
-                File fontFile = new File("src/resources/fonts/Creepy.ttf");
-                if (fontFile.exists()) {
-                    creepyFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-                } else {
-                    System.err.println("❌ No se encontró el archivo de fuente.");
-                }
-            }
-
-            if (creepyFont != null) {
-                jlbTitulo.setFont(creepyFont.deriveFont(Font.BOLD, 30f));
+                Font creepyFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(Font.BOLD, 30f);
+                jlbTitulo.setFont(creepyFont);
             } else {
                 jlbTitulo.setFont(new Font("Dialog", Font.BOLD, 30));
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
             jlbTitulo.setFont(new Font("Dialog", Font.BOLD, 30));
+            System.err.println("Error cargando fuente: " + e.getMessage());
         }
 
         jlbTitulo.setForeground(COLOR_TEXTO);
@@ -82,7 +67,7 @@ public class LoginUsuario extends javax.swing.JFrame {
         configurarBotonHover(jBtnIngresar, COLOR_BTN_INGRESAR, COLOR_BTN_INGRESAR_HOVER);
         configurarBotonHover(jBtnRegistrarse, COLOR_BTN_REGISTRARSE, COLOR_BTN_REGISTRARSE_HOVER);
 
-        // Checkbox (ojo)
+        // Checkbox
         jtbVerContrasenia.setText("👁");
         jtbVerContrasenia.setBorderPainted(false);
         jtbVerContrasenia.setContentAreaFilled(false);
@@ -123,6 +108,31 @@ public class LoginUsuario extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void mostrarErrorConImagen(String mensaje) {
+    String[] imagenes = {
+        "/resources/img/erroranime1.png",
+        "/resources/img/erroranime2.png",
+        "/resources/img/erroranime3.png"
+    };
+
+    String ruta = imagenes[contadorError % imagenes.length];
+    java.net.URL url = getClass().getResource(ruta);
+
+    if (url != null) {
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(url);
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(175, 175, java.awt.Image.SCALE_SMOOTH);
+        javax.swing.ImageIcon icono = new javax.swing.ImageIcon(imagenEscalada);
+        JOptionPane.showMessageDialog(this, mensaje, "Error de autenticación", JOptionPane.ERROR_MESSAGE, icono);
+    } else {
+        // Si no se encuentra la imagen, mostrar sin ícono personalizado
+        JOptionPane.showMessageDialog(this, mensaje, "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+    }
+
+    contadorError++;
+}
+
+
 
     //BackEnd
     private void realizarLogin() {
@@ -137,7 +147,7 @@ public class LoginUsuario extends javax.swing.JFrame {
             this.dispose();
             new VistaPrincipal().setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, mensaje, "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+            mostrarErrorConImagen(mensaje);
         }
     }
 
@@ -206,7 +216,6 @@ public class LoginUsuario extends javax.swing.JFrame {
 
         jtbVerContrasenia.setText("👁");
         jtbVerContrasenia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jtbVerContrasenia.setOpaque(true);
         jtbVerContrasenia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtbVerContraseniaActionPerformed(evt);
