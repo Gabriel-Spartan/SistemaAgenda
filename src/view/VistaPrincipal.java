@@ -307,32 +307,77 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaSel);
             if (evs.isEmpty()) return;
 
-            model.Evento original = evs.get(0);  // tomamos el primero (o abre selector si hay varios)
+            // 1) Crear diálogo selector
+            JDialog dlgSel = new JDialog(this, "Eliminar evento", true);
+            dlgSel.setLayout(new BorderLayout(5,5));
 
-            int resp = JOptionPane.showConfirmDialog(
-                this,
-                "¿Eliminar este evento?",
-                "Confirmar eliminación",
-                JOptionPane.YES_NO_OPTION
-            );
-            if (resp == JOptionPane.YES_OPTION) {
-                if (eventoController.eliminarEvento(original)) {
-                    JOptionPane.showMessageDialog(this, "✅ Evento eliminado");
-                    new Thread(this::highlightEventDays).start();
-                    cargarEventosEnTabla(
-                        eventoController.listarEventosPorFecha(
-                            UsuarioActivo.getUsuarioActual().getIdUsu(),
-                            calendario.getDate()
-                        )
-                    );
-                } else {
-                    JOptionPane.showMessageDialog(
-                        this,
-                        "❌ Error al eliminar",
-                        "Error", JOptionPane.ERROR_MESSAGE
-                    );
-                }
+            // 1.1) Tabla de eventos
+            DefaultTableModel mdl = new DefaultTableModel(
+                new String[]{"Hora","Título","Descripción"}, 0);
+            for (model.Evento ev: evs) {
+                mdl.addRow(new Object[]{
+                    ev.getHorEve().toLocalTime().toString(),
+                    ev.getTitEve(),
+                    ev.getDesEve()
+                });
             }
+            JTable tbl = new JTable(mdl);
+            tbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            dlgSel.add(new JScrollPane(tbl), BorderLayout.CENTER);
+
+            // 1.2) Panel de botones “Eliminar” / “Cancelar”
+            JButton btnDel    = new JButton("Eliminar");
+            JButton btnCancel = new JButton("Cancelar");
+            btnDel.setEnabled(false);
+            JPanel pnlBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
+            pnlBtns.add(btnDel);
+            pnlBtns.add(btnCancel);
+            dlgSel.add(pnlBtns, BorderLayout.SOUTH);
+
+            // 2) Habilitar “Eliminar” sólo cuando haya selección
+            tbl.getSelectionModel().addListSelectionListener(evsel ->
+                btnDel.setEnabled(tbl.getSelectedRow() >= 0)
+            );
+
+            // 3) Cancelar
+            btnCancel.addActionListener(ev2 -> dlgSel.dispose());
+
+            // 4) Eliminar
+            btnDel.addActionListener(ev2 -> {
+                int idx = tbl.getSelectedRow();
+                model.Evento original = evs.get(idx);
+                if (JOptionPane.showConfirmDialog(
+                        this,
+                        "¿Eliminar el evento seleccionado?",
+                        "Confirmar",
+                        JOptionPane.YES_NO_OPTION
+                    ) == JOptionPane.YES_OPTION) {
+
+                    if (eventoController.eliminarEvento(original)) {
+                        JOptionPane.showMessageDialog(this, "✅ Evento eliminado");
+                        highlightEventDays();
+                        cargarEventosEnTabla(
+                            eventoController.listarEventosPorFecha(
+                                UsuarioActivo.getUsuarioActual().getIdUsu(),
+                                calendario.getDate()
+                            )
+                        );
+                        dlgSel.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "❌ Error al eliminar",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                }
+            });
+
+            // 5) Mostrar selector
+            dlgSel.pack();
+            dlgSel.setLocationRelativeTo(this);
+            dlgSel.setVisible(true);
         });
 
         GridBagConstraints gbc = new GridBagConstraints();
