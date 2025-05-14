@@ -171,6 +171,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         panelCalendario.add(calendario, BorderLayout.CENTER);
         panelCalendario.add(Box.createVerticalStrut(20), BorderLayout.NORTH);
         panelCalendario.add(btnAgendar, BorderLayout.SOUTH);
+        panelCalendario.setPreferredSize(new Dimension(800, 500)); // Ajusta el tamaño a tu gusto
 
         // construye y oculta botones
         btnEditarEvento = new JButton("Editar evento");
@@ -525,12 +526,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
         // 1) Obtener todos los eventos del usuario
         List<model.Evento> todos = eventoController.listarEventos(UsuarioActivo.getUsuarioActual().getIdUsu());
 
-        // 2) Recorre todos los botones de día y resetea su color
+        // 2) Recorre todos los botones de día y resetea su color y borde
         for (Component comp : calendario.getDayChooser().getDayPanel().getComponents()) {
             if (!(comp instanceof JButton)) continue;
             JButton btn = (JButton) comp;
             btn.setOpaque(false);
             btn.setBackground(calendario.getBackground());
+            btn.setBorder(javax.swing.BorderFactory.createEmptyBorder()); // <-- Quita el borde
         }
 
         // 3) Vuelve a colorear sólo los días con eventos
@@ -545,6 +547,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     btn.setBackground(new Color(135, 178, 158));
                     break;
                 }
+            }
+        }
+
+        // 4) Resalta el día seleccionado (siempre)
+        cal.setTime(calendario.getDate());
+        int diaSel = cal.get(Calendar.DAY_OF_MONTH);
+        for (Component comp : calendario.getDayChooser().getDayPanel().getComponents()) {
+            if (comp instanceof JButton && ((JButton)comp).getText().equals(String.valueOf(diaSel))) {
+                JButton btn = (JButton) comp;
+                btn.setOpaque(true);
+                btn.setBackground(new Color(255, 223, 127)); // Amarillo suave para el seleccionado
+                btn.setBorder(BorderFactory.createLineBorder(new Color(255, 180, 50), 2)); // Borde naranja
+                break;
             }
         }
     }
