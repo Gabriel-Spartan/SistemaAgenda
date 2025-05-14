@@ -18,6 +18,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.Set;
+import javax.sound.sampled.*;
 
 public class VistaPrincipal extends javax.swing.JFrame {
 
@@ -454,6 +457,93 @@ public class VistaPrincipal extends javax.swing.JFrame {
         } else {
             this.jLblUsuario.setText("Usuario no identificado");
         }
+
+        // Hilo para notificar eventos en tiempo real
+        new Thread(() -> {
+            while (true) {
+                try {
+                    // Espera 30 segundos entre chequeos (ajusta si lo deseas)
+                    Thread.sleep(1_000);
+
+                    // Obtiene la fecha y hora actual
+                    java.util.Calendar ahora = java.util.Calendar.getInstance();
+                    java.sql.Date fechaHoy = new java.sql.Date(ahora.getTimeInMillis());
+                    java.sql.Time horaAhora = new java.sql.Time(ahora.getTimeInMillis());
+
+                    // Busca eventos del usuario para hoy
+                    List<model.Evento> eventosHoy = eventoController
+                        .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaHoy);
+
+                    for (model.Evento ev : eventosHoy) {
+                        // Si la hora del evento coincide con la hora actual (minuto exacto)
+                        if (Math.abs(ev.getHorEve().getTime() - horaAhora.getTime()) < 60_000) {
+                            // Mostrar advertencia visual y reproducir sonido
+                            SwingUtilities.invokeLater(() -> {
+                                reproducirSonidoAlerta();
+                                mostrarAlertaEvento(ev);
+                            });
+                        }
+                    }
+                } catch (Exception ex) {
+                    // Ignora errores para que el hilo siga funcionando
+                }
+            }
+        }).start();
+
+        // Set para evitar notificaciones duplicadas en el mismo minuto
+        Set<String> eventosNotificados = new HashSet<>();
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(20_000); // Chequea cada 20 segundos
+
+                    Calendar ahora = Calendar.getInstance();
+                    int año = ahora.get(Calendar.YEAR);
+                    int mes = ahora.get(Calendar.MONTH);
+                    int dia = ahora.get(Calendar.DAY_OF_MONTH);
+                    int hora = ahora.get(Calendar.HOUR_OF_DAY);
+                    int minuto = ahora.get(Calendar.MINUTE);
+
+                    List<model.Evento> eventosHoy = eventoController
+                        .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), new java.sql.Date(ahora.getTimeInMillis()));
+
+                    for (model.Evento ev : eventosHoy) {
+                        Calendar calEv = Calendar.getInstance();
+                        calEv.setTime(ev.getFecEve());
+                        Calendar calHora = Calendar.getInstance();
+                        calHora.setTime(ev.getHorEve());
+
+                        // Compara año, mes, día, hora y minuto
+                        if (calEv.get(Calendar.YEAR) == año &&
+                            calEv.get(Calendar.MONTH) == mes &&
+                            calEv.get(Calendar.DAY_OF_MONTH) == dia &&
+                            calHora.get(Calendar.HOUR_OF_DAY) == hora &&
+                            calHora.get(Calendar.MINUTE) == minuto) {
+
+                            // Genera un ID único por evento y minuto
+                            String idEvento = ev.getFecEve() + "_" + ev.getHorEve() + "_" + ev.getTitEve();
+                            if (!eventosNotificados.contains(idEvento)) {
+                                eventosNotificados.add(idEvento);
+
+                                SwingUtilities.invokeLater(() -> {
+                                    reproducirSonidoAlerta();
+                                    mostrarAlertaEvento(ev);
+                                });
+                            }
+                        }
+                    }
+
+                    // Limpia notificaciones viejas cada hora para evitar que crezca mucho el Set
+                    if (eventosNotificados.size() > 1000) {
+                        eventosNotificados.clear();
+                    }
+
+                } catch (Exception ex) {
+                    // Ignora errores para que el hilo siga funcionando
+                }
+            }
+        }).start();
     }
 
     private void abrirDialogoEdicion(model.Evento original) {
@@ -592,6 +682,69 @@ public class VistaPrincipal extends javax.swing.JFrame {
         dlg.pack();
         dlg.setLocationRelativeTo(this);
         dlg.setVisible(true);
+    }
+
+    private void reproducirSonidoAlerta() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                getClass().getResource("/resources/sounds/The-big-adventure-Google-Android-8-Ringtone.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            Toolkit.getDefaultToolkit().beep(); // Fallback si no encuentra el archivo
+        }
+    }
+
+    private void mostrarAlertaEvento(model.Evento ev) {
+        // Icono personalizado grande
+        ImageIcon icono = null;
+        try {
+            java.net.URL url = getClass().getResource("/resources/img/imageEve.jpg");
+            if (url != null) {
+                Image img = new ImageIcon(url).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                icono = new ImageIcon(img);
+            }
+        } catch (Exception e) { /* ignora */ }
+
+        // Panel personalizado
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JLabel lblTitulo = new JLabel("<html><b>¡Tienes un evento ahora!</b></html>");
+        lblTitulo.setForeground(new Color(255, 87, 34));
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        JLabel lblEvento = new JLabel("<html><b>Título:</b> " + ev.getTitEve() + "<br><b>Descripción:</b> " + ev.getDesEve() + "</html>");
+        lblEvento.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        panel.add(lblTitulo);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(lblEvento);
+
+        // Reproducir sonido y detenerlo solo al cerrar el mensaje
+        Clip clip = null;
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                getClass().getResource("/resources/sounds/The-big-adventure-Google-Android-8-Ringtone.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY); // Sonido en bucle hasta que se cierre el mensaje
+            clip.start();
+        } catch (Exception e) {
+            Toolkit.getDefaultToolkit().beep();
+        }
+
+        JOptionPane.showMessageDialog(
+            this,
+            panel,
+            "⏰ Recordatorio de Evento",
+            JOptionPane.WARNING_MESSAGE,
+            icono
+        );
+
+        // Detener el sonido solo cuando se cierre el mensaje
+        if (clip != null && clip.isRunning()) {
+            clip.stop();
+            clip.close();
+        }
     }
 
     @SuppressWarnings("unchecked")
