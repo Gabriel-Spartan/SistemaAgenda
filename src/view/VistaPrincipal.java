@@ -14,10 +14,16 @@ import com.toedter.calendar.JCalendar;
 import java.awt.GridLayout;
 import java.util.Calendar;
 import javax.swing.SwingUtilities;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Time;
 
 public class VistaPrincipal extends javax.swing.JFrame {
 
     private JCalendar calendario;  // <-- guardamos la referencia
+    private JButton btnEditarEvento;
+    private JButton btnEliminarEvento;
+    private controller.EventoController eventoController = new controller.EventoController();
 
     public VistaPrincipal() {
         initComponents();
@@ -141,6 +147,194 @@ public class VistaPrincipal extends javax.swing.JFrame {
         panelCalendario.add(Box.createVerticalStrut(20), BorderLayout.NORTH);
         panelCalendario.add(btnAgendar, BorderLayout.SOUTH);
 
+        // construye y oculta botones
+        btnEditarEvento = new JButton("Editar evento");
+        btnEliminarEvento = new JButton("Eliminar evento");
+        btnEditarEvento.setVisible(false);
+        btnEliminarEvento.setVisible(false);
+
+        // Configuración de estilo para el botón "Editar evento"
+        btnEditarEvento.setFocusPainted(false);
+        btnEditarEvento.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btnEditarEvento.setBackground(new Color(96, 187, 144)); // Mismo color que "Crear evento"
+        btnEditarEvento.setForeground(Color.WHITE);
+        btnEditarEvento.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 30, 10, 30));
+        btnEditarEvento.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnEditarEvento.setOpaque(true);
+
+        // Configuración de estilo para el botón "Eliminar evento"
+        btnEliminarEvento.setFocusPainted(false);
+        btnEliminarEvento.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btnEliminarEvento.setBackground(new Color(96, 187, 144)); // Mismo color que "Crear evento"
+        btnEliminarEvento.setForeground(Color.WHITE);
+        btnEliminarEvento.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 30, 10, 30));
+        btnEliminarEvento.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnEliminarEvento.setOpaque(true);
+
+        // Efecto hover para el botón "Editar evento"
+        btnEditarEvento.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarEvento.setBackground(new Color(96, 200, 150)); // Color más claro al pasar el mouse
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditarEvento.setBackground(new Color(96, 187, 144)); // Color original
+            }
+        });
+
+        // Efecto hover para el botón "Eliminar evento"
+        btnEliminarEvento.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarEvento.setBackground(new Color(96, 200, 150)); // Color más claro al pasar el mouse
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarEvento.setBackground(new Color(96, 187, 144)); // Color original
+            }
+        });
+
+        // los ubicas a la derecha/izquierda del panelCalendario
+        panelCalendario.add(btnEliminarEvento, BorderLayout.WEST);
+        panelCalendario.add(btnEditarEvento, BorderLayout.EAST);
+
+        // Listener para saber cuándo cambia la fecha
+        calendario.addPropertyChangeListener("calendar", evt -> {
+            Date fechaSel = calendario.getDate();
+            List<model.Evento> evs = eventoController.listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaSel);
+            boolean tiene = !evs.isEmpty();
+            btnEditarEvento.setVisible(tiene);
+            btnEliminarEvento.setVisible(tiene);
+            // (opcional) guarda evs.get(0) en una variable de instancia para usarla en acciones
+        });
+
+        // Acción del botón Editar
+        btnEditarEvento.addActionListener(e -> {
+            Date fechaSel = calendario.getDate();
+            List<model.Evento> evs = eventoController
+                .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaSel);
+            if (evs.isEmpty()) return;
+
+            // 1) Crear diálogo selector
+            JDialog dlgSel = new JDialog(this, "Seleccionar evento", true);
+            dlgSel.setLayout(new BorderLayout(5,5));
+
+            // 1.1) Tabla de eventos
+            DefaultTableModel mdl = new DefaultTableModel(
+                new String[]{"Hora","Título","Descripción"}, 0);
+            for (model.Evento ev: evs) {
+                mdl.addRow(new Object[]{
+                    ev.getHorEve().toLocalTime().toString(),
+                    ev.getTitEve(),
+                    ev.getDesEve()
+                });
+            }
+            JTable tbl = new JTable(mdl);
+            tbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            dlgSel.add(new JScrollPane(tbl), BorderLayout.CENTER);
+
+            // 1.2) Panel de botones “Editar” / “Cancelar”
+            JButton btnOk = new JButton("Editar");
+            JButton btnCancel = new JButton("Cancelar");
+            btnOk.setEnabled(false);
+            JPanel pnlBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
+            pnlBtns.add(btnOk);
+            pnlBtns.add(btnCancel);
+            dlgSel.add(pnlBtns, BorderLayout.SOUTH);
+
+            // 2) Habilitar “Editar” sólo cuando se seleccione fila
+            tbl.getSelectionModel().addListSelectionListener(evsel -> {
+                btnOk.setEnabled(tbl.getSelectedRow() >= 0);
+            });
+
+            // 3) Acción “Cancelar”
+            btnCancel.addActionListener(ev2 -> dlgSel.dispose());
+
+            // 4) Acción “Editar” -> abre formulario de edición
+            btnOk.addActionListener(ev2 -> {
+                int idx = tbl.getSelectedRow();
+                model.Evento original = evs.get(idx);
+                java.sql.Date  fechaOrig = original.getFecEve();
+                java.sql.Time  horaOrig  = original.getHorEve();
+
+                dlgSel.dispose();
+
+                // abre dialogo de edición
+                EditarEventoDialog dlgEdit = new EditarEventoDialog(this);
+                dlgEdit.setTitulo(original.getTitEve());
+                dlgEdit.setDescripcion(original.getDesEve());
+                dlgEdit.setFecha(original.getFecEve());
+                dlgEdit.setHora(original.getHorEve());
+                dlgEdit.setVisible(true);
+
+                if (!dlgEdit.isConfirmado()) return;
+
+                // extrae nuevos valores
+                original.setTitEve(dlgEdit.getTitulo());
+                original.setDesEve(dlgEdit.getDescripcion());
+                original.setFecEve(new java.sql.Date(dlgEdit.getFecha().getTime()));
+                original.setHorEve(dlgEdit.getHora());
+
+                // lanza update con los valores antiguos para el WHERE
+                if (eventoController.editarEvento(original, fechaOrig, horaOrig)) {
+                    JOptionPane.showMessageDialog(this, "✅ Evento actualizado");
+                    highlightEventDays();    // <— repinta: quita 12 y marca 13
+                    cargarEventosEnTabla(
+                        eventoController.listarEventosPorFecha(
+                            UsuarioActivo.getUsuarioActual().getIdUsu(),
+                            calendario.getDate()
+                        )
+                    );
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al actualizar", 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
+            // 5) Mostrar selector
+            dlgSel.pack();
+            dlgSel.setLocationRelativeTo(this);
+            dlgSel.setVisible(true);
+        });
+
+        // Acción del botón Eliminar
+        btnEliminarEvento.addActionListener(e -> {
+            Date fechaSel = calendario.getDate();
+            List<model.Evento> evs = eventoController
+                .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaSel);
+            if (evs.isEmpty()) return;
+
+            model.Evento original = evs.get(0);  // tomamos el primero (o abre selector si hay varios)
+
+            int resp = JOptionPane.showConfirmDialog(
+                this,
+                "¿Eliminar este evento?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION
+            );
+            if (resp == JOptionPane.YES_OPTION) {
+                if (eventoController.eliminarEvento(original)) {
+                    JOptionPane.showMessageDialog(this, "✅ Evento eliminado");
+                    new Thread(this::highlightEventDays).start();
+                    cargarEventosEnTabla(
+                        eventoController.listarEventosPorFecha(
+                            UsuarioActivo.getUsuarioActual().getIdUsu(),
+                            calendario.getDate()
+                        )
+                    );
+                } else {
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "❌ Error al eliminar",
+                        "Error", JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -187,6 +381,42 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }
 
+    private void abrirDialogoEdicion(model.Evento original) {
+        // 1) Guardamos los valores antiguos para el WHERE
+        java.sql.Date fechaOrig = original.getFecEve();
+        java.sql.Time horaOrig   = original.getHorEve();
+
+        // 2) Abrimos el diálogo de edición
+        EditarEventoDialog dlg = new EditarEventoDialog(this);
+        dlg.setTitulo(original.getTitEve());
+        dlg.setDescripcion(original.getDesEve());
+        dlg.setFecha(original.getFecEve());
+        dlg.setHora(original.getHorEve());
+        dlg.setVisible(true);
+        if (!dlg.isConfirmado()) return;
+
+        // 3) Actualizamos el objeto con los nuevos valores
+        original.setTitEve(dlg.getTitulo());
+        original.setDesEve(dlg.getDescripcion());
+        original.setFecEve(new java.sql.Date(dlg.getFecha().getTime()));
+        original.setHorEve(dlg.getHora());
+
+        // 4) Llamamos al controller PASANDO fechaOrig y horaOrig
+        if (eventoController.editarEvento(original, fechaOrig, horaOrig)) {
+            JOptionPane.showMessageDialog(this, "✅ Evento actualizado");
+            highlightEventDays();    // <— repinta: quita 12 y marca 13
+            cargarEventosEnTabla(
+                eventoController.listarEventosPorFecha(
+                    UsuarioActivo.getUsuarioActual().getIdUsu(),
+                    calendario.getDate()
+                )
+            );
+        } else {
+            JOptionPane.showMessageDialog(this, "❌ Error al actualizar",
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void cargarEventosEnTabla(List<model.Evento> eventos) {
         String[] columnas = {"Fecha", "Hora", "Título", "Descripción"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas) {
@@ -214,36 +444,34 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * de verde aquellos que tengan un evento en UsuarioActivo.
      */
     private void highlightEventDays() {
-        try {
-            List<model.Evento> eventos = session.UsuarioActivo.getEventosDelUsuario();
-            Calendar disp = Calendar.getInstance();
-            disp.setTime(calendario.getDate());
-            int mesDisp = disp.get(Calendar.MONTH), añoDisp = disp.get(Calendar.YEAR);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(calendario.getDate());
+        int mes = cal.get(Calendar.MONTH), año = cal.get(Calendar.YEAR);
 
-            Component[] comps = calendario.getDayChooser().getDayPanel().getComponents();
-            // 1) Resetear fondo
-            for (Component c : comps) {
-                if (c instanceof JButton) {
-                    SwingUtilities.invokeLater(() -> c.setBackground(Color.WHITE));
+        // 1) Obtener todos los eventos del usuario
+        List<model.Evento> todos = eventoController.listarEventos(UsuarioActivo.getUsuarioActual().getIdUsu());
+
+        // 2) Recorre todos los botones de día y resetea su color
+        for (Component comp : calendario.getDayChooser().getDayPanel().getComponents()) {
+            if (!(comp instanceof JButton)) continue;
+            JButton btn = (JButton) comp;
+            btn.setOpaque(false);
+            btn.setBackground(calendario.getBackground());
+        }
+
+        // 3) Vuelve a colorear sólo los días con eventos
+        for (model.Evento e : todos) {
+            cal.setTime(e.getFecEve());
+            if (cal.get(Calendar.MONTH) != mes || cal.get(Calendar.YEAR) != año) continue;
+            int día = cal.get(Calendar.DAY_OF_MONTH);
+            for (Component comp : calendario.getDayChooser().getDayPanel().getComponents()) {
+                if (comp instanceof JButton && ((JButton)comp).getText().equals(String.valueOf(día))) {
+                    JButton btn = (JButton) comp;
+                    btn.setOpaque(true);
+                    btn.setBackground(new Color(135, 178, 158));
+                    break;
                 }
             }
-            // 2) Por cada evento, si coincide mes/año, colorear el día
-            for (model.Evento ev : eventos) {
-                Calendar ce = Calendar.getInstance();
-                ce.setTime(ev.getFecEve());
-                if (ce.get(Calendar.MONTH) == mesDisp && ce.get(Calendar.YEAR) == añoDisp) {
-                    String diaStr = String.valueOf(ce.get(Calendar.DAY_OF_MONTH));
-                    for (Component c : comps) {
-                        if (c instanceof JButton && ((JButton)c).getText().equals(diaStr)) {
-                            SwingUtilities.invokeLater(() ->
-                                c.setBackground(new Color(96, 187, 144))
-                            );
-                        }
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 

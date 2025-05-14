@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.sql.Time;
+import java.time.LocalTime;
 
 public class EventoDialog extends JDialog {
     private boolean confirmado = false;
@@ -104,8 +105,21 @@ public class EventoDialog extends JDialog {
         return descArea.getText().trim();
     }
     public Time getHora() {
-        String hh = (String)hourCombo.getSelectedItem();
-        String mm = (String)minuteCombo.getSelectedItem();
-        return Time.valueOf(hh + ":" + mm + ":00");
+        int h = Integer.parseInt((String)hourCombo.getSelectedItem());
+        int m = Integer.parseInt((String)minuteCombo.getSelectedItem());
+        return Time.valueOf(LocalTime.of(h, m));
+    }
+
+    public void setTitulo(String titulo) {
+        tituloField.setText(titulo);
+    }
+    public void setDescripcion(String descripcion) {
+        descArea.setText(descripcion);
+    }
+    public void setHora(Time hora) {
+        int h = hora.toLocalTime().getHour();
+        int m = hora.toLocalTime().getMinute();
+        hourCombo.setSelectedItem(String.format("%02d", h));
+        minuteCombo.setSelectedItem(String.format("%02d", m));
     }
 }
