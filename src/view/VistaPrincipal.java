@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 
 public class VistaPrincipal extends javax.swing.JFrame {
 
@@ -64,6 +65,28 @@ public class VistaPrincipal extends javax.swing.JFrame {
         calendario.addPropertyChangeListener("calendar", evt -> {
             new Thread(this::highlightEventDays).start();
         });
+
+        for (Component comp : calendario.getDayChooser().getDayPanel().getComponents()) {
+            if (comp instanceof JButton) {
+                ((JButton) comp).addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if (e.getClickCount() == 2) {
+                            JButton btn = (JButton) e.getSource();
+                            String txt = btn.getText();
+                            if (txt.matches("\\d+")) {
+                                // Reconstruimos la fecha con el día clicado
+                                Date sel = calendario.getDate();
+                                Calendar cal = Calendar.getInstance();
+                                cal.setTime(sel);
+                                cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(txt));
+                                mostrarEventosDelDia(cal.getTime());
+                            }
+                        }
+                    }
+                });
+            }
+        }
 
         // Botón Agendar
         JButton btnAgendar = new JButton("Agendar evento");
@@ -518,6 +541,36 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
             }
         }
+    }
+
+    private void mostrarEventosDelDia(Date fecha) {
+        List<model.Evento> evs = eventoController
+            .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fecha);
+        if (evs.isEmpty()) return;
+
+        JDialog dlg = new JDialog(this, 
+            "Eventos del " + new SimpleDateFormat("yyyy-MM-dd").format(fecha), true);
+        DefaultTableModel mdl = new DefaultTableModel(
+            new String[]{"Hora","Título","Descripción"}, 0);
+        for (model.Evento ev : evs) {
+            mdl.addRow(new Object[]{
+                ev.getHorEve().toLocalTime().toString(),
+                ev.getTitEve(),
+                ev.getDesEve()
+            });
+        }
+        JTable tbl = new JTable(mdl);
+        dlg.getContentPane().add(new JScrollPane(tbl), BorderLayout.CENTER);
+
+        JButton btnCerrar = new JButton("Cerrar");
+        btnCerrar.addActionListener(e -> dlg.dispose());
+        JPanel pnl = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pnl.add(btnCerrar);
+        dlg.getContentPane().add(pnl, BorderLayout.SOUTH);
+
+        dlg.pack();
+        dlg.setLocationRelativeTo(this);
+        dlg.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
