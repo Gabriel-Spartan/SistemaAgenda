@@ -8,12 +8,163 @@ import controller.ReporteController;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import exception.ExcepcionVista;
+import javax.swing.*;
+import java.awt.*;
+import com.toedter.calendar.JCalendar;
+import java.awt.GridLayout;
+import java.util.Calendar;
+import javax.swing.SwingUtilities;
 
 public class VistaPrincipal extends javax.swing.JFrame {
+
+    private JCalendar calendario;  // <-- guardamos la referencia
 
     public VistaPrincipal() {
         initComponents();
 
+        setTitle("Agenda de Eventos");
+        setLocationRelativeTo(null);
+
+        // Panel de botones arriba del calendario
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        JButton btnAgenda = new JButton("Agenda");
+        btnAgenda.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnAgenda.setBackground(new Color(96, 187, 144));
+        btnAgenda.setForeground(Color.WHITE);
+        btnAgenda.setFocusPainted(false);
+
+        JButton btnReportes = new JButton("Reportes");
+        btnReportes.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnReportes.setBackground(new Color(135, 178, 158));
+        btnReportes.setForeground(Color.WHITE);
+        btnReportes.setFocusPainted(false);
+
+        panelBotones.setBackground(new Color(245, 247, 250));
+        panelBotones.add(btnAgenda);
+        panelBotones.add(btnReportes);
+
+        // Calendario personalizado
+        calendario = new JCalendar();
+        calendario.setWeekOfYearVisible(false);
+        calendario.setDecorationBackgroundColor(new Color(135, 178, 158, 60));
+        calendario.setSundayForeground(Color.RED);
+        calendario.setTodayButtonVisible(true);
+        calendario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        calendario.getDayChooser().setFont(new Font("Segoe UI", Font.BOLD, 16));
+        calendario.setBackground(new Color(255, 255, 255));
+        calendario.getDayChooser().setDecorationBackgroundColor(new Color(96, 187, 144));
+
+        // cuando cambie el día, mes o año, vuelvo a resaltar
+        calendario.addPropertyChangeListener("calendar", evt -> {
+            new Thread(this::highlightEventDays).start();
+        });
+
+        // Botón Agendar
+        JButton btnAgendar = new JButton("Agendar evento");
+        btnAgendar.setFocusPainted(false);
+        btnAgendar.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btnAgendar.setBackground(new Color(96, 187, 144));
+        btnAgendar.setForeground(Color.WHITE);
+        btnAgendar.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 30, 10, 30));
+        btnAgendar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnAgendar.setOpaque(true);
+
+        // Efecto hover para el botón Agendar
+        btnAgendar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAgendar.setBackground(new Color(135, 178, 158));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAgendar.setBackground(new Color(96, 187, 144));
+            }
+        });
+
+        // Acción del botón Agendar
+        btnAgendar.addActionListener(e -> {
+            try {
+                // 1) Tomar fecha del calendario
+                java.util.Date selDate = calendario.getDate();
+                java.sql.Date fecha = new java.sql.Date(selDate.getTime());
+
+                // 2) Mostrar diálogo
+                EventoDialog dlg = new EventoDialog(this);
+                dlg.setVisible(true);
+                if (!dlg.isConfirmado()) return;
+
+                // 3) Construir evento
+                String idUsu = session.UsuarioActivo.getUsuarioActual().getIdUsu();
+                model.Evento ev = new model.Evento(
+                    idUsu,
+                    fecha,
+                    dlg.getHora(),
+                    dlg.getTitulo(),
+                    dlg.getDescripcion()
+                );
+
+                // 4) Guardar y refrescar tabla
+                controller.EventoController ec = new controller.EventoController();
+                if (ec.crearEvento(ev)) {
+                    java.util.List<model.Evento> lista = ec.listarEventos(idUsu);
+                    session.UsuarioActivo.actualizarEventos(lista);
+                    cargarEventosEnTabla(lista);
+                    new Thread(() -> highlightEventDays()).start(); // vuelvo a resaltar
+                    JOptionPane.showMessageDialog(this, "✅ Evento creado correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                        "❌ Error al insertar",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this,
+                    "❌ Error:\n" + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        // Panel central para calendario y botón
+        JPanel panelCentral = new JPanel(new GridBagLayout());
+        panelCentral.setBackground(new Color(245, 247, 250));
+        JPanel panelCalendario = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(220, 220, 230, 180));
+                g2.fillRoundRect(5, 5, getWidth() - 10, getHeight() - 10, 30, 30);
+            }
+        };
+        panelCalendario.setOpaque(false);
+        panelCalendario.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelCalendario.add(calendario, BorderLayout.CENTER);
+        panelCalendario.add(Box.createVerticalStrut(20), BorderLayout.NORTH);
+        panelCalendario.add(btnAgendar, BorderLayout.SOUTH);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panelCentral.add(panelCalendario, gbc);
+
+        // Cambia y agrega los componentes a jPanel3 (solo pestaña de eventos)
+        jPanel3.setLayout(new BorderLayout());
+        jPanel3.removeAll();
+        jPanel3.add(panelCentral, BorderLayout.CENTER);
+        jPanel3.revalidate();
+        jPanel3.repaint();
+
+        // Acción del botón Reportes
+        btnReportes.addActionListener(e -> {
+            jTabbedPane1.setSelectedIndex(1); // Va a la pestaña de Reportes
+        });
+
+        // Acción del botón Agenda
+        btnAgenda.addActionListener(e -> {
+            jTabbedPane1.setSelectedIndex(0); // Va a la pestaña de Agenda/Eventos
+        });
+
+        // Mostrar información del usuario actual
         String[] meses = {
             "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
             "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
@@ -23,7 +174,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jSpnAnio.setValue(anioActual);
         jDchReporteDia.setDate(new java.util.Date());
 
-        // Mostrar información del usuario actual
         if (UsuarioActivo.haySesionActiva()) {
             Usuario usuario = UsuarioActivo.getUsuarioActual();
             this.jLblUsuario.setText("Usuario - " + usuario.getNomUsu() + " " + usuario.getApeUsu());
@@ -31,6 +181,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             cargarEventosEnTabla(UsuarioActivo.getEventosDelUsuario());
             this.jTblEventos.getColumnModel().getColumn(0).setPreferredWidth(30);
             this.jTblEventos.getColumnModel().getColumn(1).setPreferredWidth(20);
+            new Thread(() -> highlightEventDays()).start();  // resaltar los días con evento
         } else {
             this.jLblUsuario.setText("Usuario no identificado");
         }
@@ -56,6 +207,44 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
 
         jTblEventos.setModel(modelo);
+    }
+
+    /**
+     * Recorre los días del mes que muestra el calendario y pinta
+     * de verde aquellos que tengan un evento en UsuarioActivo.
+     */
+    private void highlightEventDays() {
+        try {
+            List<model.Evento> eventos = session.UsuarioActivo.getEventosDelUsuario();
+            Calendar disp = Calendar.getInstance();
+            disp.setTime(calendario.getDate());
+            int mesDisp = disp.get(Calendar.MONTH), añoDisp = disp.get(Calendar.YEAR);
+
+            Component[] comps = calendario.getDayChooser().getDayPanel().getComponents();
+            // 1) Resetear fondo
+            for (Component c : comps) {
+                if (c instanceof JButton) {
+                    SwingUtilities.invokeLater(() -> c.setBackground(Color.WHITE));
+                }
+            }
+            // 2) Por cada evento, si coincide mes/año, colorear el día
+            for (model.Evento ev : eventos) {
+                Calendar ce = Calendar.getInstance();
+                ce.setTime(ev.getFecEve());
+                if (ce.get(Calendar.MONTH) == mesDisp && ce.get(Calendar.YEAR) == añoDisp) {
+                    String diaStr = String.valueOf(ce.get(Calendar.DAY_OF_MONTH));
+                    for (Component c : comps) {
+                        if (c instanceof JButton && ((JButton)c).getText().equals(diaStr)) {
+                            SwingUtilities.invokeLater(() ->
+                                c.setBackground(new Color(96, 187, 144))
+                            );
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")

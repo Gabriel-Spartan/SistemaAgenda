@@ -36,5 +36,21 @@ public class EventoDAO {
 
         return lista;
     }
+
+    public boolean insertarEvento(Evento evento) {
+        String sql = "INSERT INTO EVENTOS (ID_USU_PER, FEC_EVE, HOR_EVE, TIT_EVE, DES_EVE) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = ConexionBD.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, evento.getIdUsuPer());
+            ps.setDate(2, evento.getFecEve());
+            ps.setTime(3, evento.getHorEve());
+            ps.setString(4, evento.getTitEve());
+            ps.setString(5, evento.getDesEve());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     
 }
