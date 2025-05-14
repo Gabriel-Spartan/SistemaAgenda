@@ -154,6 +154,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         // Panel central para calendario y botón
         JPanel panelCentral = new JPanel(new GridBagLayout());
         panelCentral.setBackground(new Color(245, 247, 250));
+        panelCentral.setPreferredSize(new Dimension(700, 400)); // <-- Aumenta el tamaño del panel central
+
         JPanel panelCalendario = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -415,6 +417,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jPanel3.add(panelCentral, BorderLayout.CENTER);
         jPanel3.revalidate();
         jPanel3.repaint();
+
+        // Aumenta el tamaño de la ventana principal
+        this.setPreferredSize(new Dimension(900, 600));
+        this.setMinimumSize(new Dimension(900, 600));
 
         // Acción del botón Reportes
         btnReportes.addActionListener(e -> {
