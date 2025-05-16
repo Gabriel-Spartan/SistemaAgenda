@@ -1,6 +1,7 @@
 # IGNORAR ARCHIVOS DE COMPILACIÓN Y SALIDA
+# IGNORAR TODO EN /build/
+build/
 
-/build/
 /dist/
 
 # Ignorar archivos compilados de Java
@@ -17,6 +18,7 @@ nbproject/private/
 
 # Archivos generados automáticamente por NetBeans (se pueden regenerar)
 nbproject/genfiles.properties
+nbproject/project.properties
 nbproject/build-impl.xml
 
 # IGNORAR ARCHIVOS TEMPORALES
@@ -31,8 +33,15 @@ Thumbs.db
 # DOCUMENTACIÓN Y LIBRERÍAS
 
 # Si usas una carpeta con librerías externas
-/lib/*.jar
+*.jar
 
 # Si usas Obsidian para documentación
 /documentation/.obsidian/
 documentation/.trash/
+
+# Ignorar las variables de entorno
+.env
+
+# No ignorar los .jar de la carpeta lib
+!/lib/
+!/lib/*.jar

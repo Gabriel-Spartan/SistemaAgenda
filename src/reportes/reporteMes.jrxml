@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2c05bfb4-7818-4d11-9f06-9a85597eec64">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="mes" class="java.lang.Integer"/>
+	<parameter name="anio" class="java.lang.Integer"/>
+	<parameter name="usuario_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    E.ID_USU_PER,
+    U.NOM_USU,
+    U.APE_USU,
+    E.FEC_EVE,
+    E.HOR_EVE,
+    E.TIT_EVE,
+    E.DES_EVE
+FROM EVENTOS E, USUARIOS U
+WHERE E.ID_USU_PER = U.ID_USU 
+  AND MONTH(E.FEC_EVE) = $P{mes}
+  AND YEAR(E.FEC_EVE) = $P{anio}
+  AND E.ID_USU_PER = $P{usuario_id}
+ORDER BY E.FEC_EVE, E.HOR_EVE;
+
+]]>
+	</queryString>
+	<field name="ID_USU_PER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOM_USU" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="APE_USU" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FEC_EVE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HOR_EVE" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIT_EVE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DES_EVE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="275" y="0" width="300" height="64" uuid="011e908e-3aa8-4983-98a6-23c18ff4db6b"/>
+				<imageExpression><![CDATA["leaf_banner_gray.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="3a9ff64a-ea75-46ea-a3ae-e65d1d6dd757"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Reportes por Mes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="117" y="46" width="126" height="22" uuid="3e58694c-c56f-4851-8a40-a0f95c2bdb7c"/>
+				<text><![CDATA[De: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Detail" x="152" y="49" width="111" height="15" uuid="6d25d765-5fdc-431e-a8f4-aaea68d55ccb"/>
+				<textFieldExpression><![CDATA[$F{ID_USU_PER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="fd2d715a-f972-4ed9-91e1-89b1981101c3"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="98" y="19" width="54" height="15" uuid="2b0857f6-f8f2-491b-8eae-5d7f8061dc0e"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="213" y="20" width="70" height="15" uuid="fa4d25a9-6676-4e35-85ec-fbb2073a25ed"/>
+				<text><![CDATA[Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="304" y="20" width="90" height="15" uuid="19a44106-0370-4626-8893-b4350c77b0ea"/>
+				<text><![CDATA[Título]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="394" y="19" width="111" height="15" uuid="53fed60e-b648-4ef1-b054-ff498bba44a1"/>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="98" height="15" uuid="3104e55a-aaf2-45d9-a1cb-cce5a3e218f5"/>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="44" width="555" height="1" uuid="7117422c-7c9b-4c69-a038-63403c69afad"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField pattern="h.mm a">
+				<reportElement style="Detail" x="213" y="1" width="91" height="15" uuid="bebc1a64-d0c3-43c8-9324-779bb84cc0b2"/>
+				<textFieldExpression><![CDATA[$F{HOR_EVE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="304" y="1" width="90" height="43" uuid="0059a45d-aab1-4bfe-bfa4-c6389a3f5a99"/>
+				<textFieldExpression><![CDATA[$F{TIT_EVE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Detail" x="100" y="1" width="113" height="15" uuid="affcd922-31de-47ed-bd1d-7662505dfd41"/>
+				<textFieldExpression><![CDATA[$F{FEC_EVE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="83279902-47f9-45e5-82e2-1fed4a5ef6ac"/>
+				<textFieldExpression><![CDATA[$F{NOM_USU} + " " + $F{APE_USU}
+]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="394" y="1" width="159" height="43" uuid="510ac850-cf0b-4188-840d-4a410718bb74"/>
+				<textFieldExpression><![CDATA[$F{DES_EVE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="106d080e-d8cd-4e34-97e7-d46a39b9bd3c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="4f12d208-7bf6-48f8-b325-b95f4555953b"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="346a39a2-e84d-4b7d-93a0-f592d8facd2f"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="dbd2d102-787c-428a-bb5f-1c0dea169c6d"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
