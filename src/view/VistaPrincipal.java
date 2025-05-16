@@ -235,9 +235,26 @@ public class VistaPrincipal extends javax.swing.JFrame {
             Date fechaSel = calendario.getDate();
             List<model.Evento> evs = eventoController.listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaSel);
             boolean tiene = !evs.isEmpty();
-            btnEditarEvento.setVisible(tiene);
-            btnEliminarEvento.setVisible(tiene);
-            // (opcional) guarda evs.get(0) en una variable de instancia para usarla en acciones
+
+            // Comparar solo la fecha (sin hora)
+            Calendar hoy = Calendar.getInstance();
+            hoy.set(Calendar.HOUR_OF_DAY, 0);
+            hoy.set(Calendar.MINUTE, 0);
+            hoy.set(Calendar.SECOND, 0);
+            hoy.set(Calendar.MILLISECOND, 0);
+
+            Calendar sel = Calendar.getInstance();
+            sel.setTime(fechaSel);
+            sel.set(Calendar.HOUR_OF_DAY, 0);
+            sel.set(Calendar.MINUTE, 0);
+            sel.set(Calendar.SECOND, 0);
+            sel.set(Calendar.MILLISECOND, 0);
+
+            boolean esHoyOFuturo = !sel.before(hoy); // true si es hoy o futuro
+
+            btnEditarEvento.setVisible(tiene && esHoyOFuturo);
+            btnEliminarEvento.setVisible(tiene && esHoyOFuturo);
+            btnAgendar.setVisible(esHoyOFuturo);
         });
 
         // Acción del botón Editar
