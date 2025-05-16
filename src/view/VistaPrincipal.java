@@ -137,7 +137,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 controller.EventoController ec = new controller.EventoController();
                 if (ec.crearEvento(ev)) {
                     java.util.List<model.Evento> lista = ec.listarEventos(idUsu);
-                    session.UsuarioActivo.actualizarEventos(lista);
+                    session.UsuarioActivo.actualizarEventos(lista); // <-- Actualiza eventos en memoria
                     cargarEventosEnTabla(lista);
                     new Thread(() -> highlightEventDays()).start(); // vuelvo a resaltar
                     JOptionPane.showMessageDialog(this, "✅ Evento creado correctamente");
@@ -309,6 +309,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
                 // lanza update con los valores antiguos para el WHERE
                 if (eventoController.editarEvento(original, fechaOrig, horaOrig)) {
+                    // Actualiza la lista de eventos en memoria para el notificador
+                    java.util.List<model.Evento> lista = eventoController.listarEventos(UsuarioActivo.getUsuarioActual().getIdUsu());
+                    session.UsuarioActivo.actualizarEventos(lista);
+
                     JOptionPane.showMessageDialog(this, "✅ Evento actualizado");
                     highlightEventDays();    // <— repinta: quita 12 y marca 13
                     cargarEventosEnTabla(
@@ -383,6 +387,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     ) == JOptionPane.YES_OPTION) {
 
                     if (eventoController.eliminarEvento(original)) {
+                        // Actualiza la lista de eventos en memoria para el notificador
+                        java.util.List<model.Evento> lista = eventoController.listarEventos(UsuarioActivo.getUsuarioActual().getIdUsu());
+                        session.UsuarioActivo.actualizarEventos(lista);
                         JOptionPane.showMessageDialog(this, "✅ Evento eliminado");
                         highlightEventDays();
                         cargarEventosEnTabla(
@@ -396,8 +403,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(
                             this,
                             "❌ Error al eliminar",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE
+                            "Error", JOptionPane.ERROR_MESSAGE
                         );
                     }
                 }
@@ -458,92 +464,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
             this.jLblUsuario.setText("Usuario no identificado");
         }
 
-        // Hilo para notificar eventos en tiempo real
-        new Thread(() -> {
-            while (true) {
-                try {
-                    // Espera 30 segundos entre chequeos (ajusta si lo deseas)
-                    Thread.sleep(1_000);
-
-                    // Obtiene la fecha y hora actual
-                    java.util.Calendar ahora = java.util.Calendar.getInstance();
-                    java.sql.Date fechaHoy = new java.sql.Date(ahora.getTimeInMillis());
-                    java.sql.Time horaAhora = new java.sql.Time(ahora.getTimeInMillis());
-
-                    // Busca eventos del usuario para hoy
-                    List<model.Evento> eventosHoy = eventoController
-                        .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaHoy);
-
-                    for (model.Evento ev : eventosHoy) {
-                        // Si la hora del evento coincide con la hora actual (minuto exacto)
-                        if (Math.abs(ev.getHorEve().getTime() - horaAhora.getTime()) < 60_000) {
-                            // Mostrar advertencia visual y reproducir sonido
-                            SwingUtilities.invokeLater(() -> {
-                                reproducirSonidoAlerta();
-                                mostrarAlertaEvento(ev);
-                            });
-                        }
-                    }
-                } catch (Exception ex) {
-                    // Ignora errores para que el hilo siga funcionando
-                }
-            }
-        }).start();
-
-        // Set para evitar notificaciones duplicadas en el mismo minuto
-        Set<String> eventosNotificados = new HashSet<>();
-
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(20_000); // Chequea cada 20 segundos
-
-                    Calendar ahora = Calendar.getInstance();
-                    int año = ahora.get(Calendar.YEAR);
-                    int mes = ahora.get(Calendar.MONTH);
-                    int dia = ahora.get(Calendar.DAY_OF_MONTH);
-                    int hora = ahora.get(Calendar.HOUR_OF_DAY);
-                    int minuto = ahora.get(Calendar.MINUTE);
-
-                    List<model.Evento> eventosHoy = eventoController
-                        .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), new java.sql.Date(ahora.getTimeInMillis()));
-
-                    for (model.Evento ev : eventosHoy) {
-                        Calendar calEv = Calendar.getInstance();
-                        calEv.setTime(ev.getFecEve());
-                        Calendar calHora = Calendar.getInstance();
-                        calHora.setTime(ev.getHorEve());
-
-                        // Compara año, mes, día, hora y minuto
-                        if (calEv.get(Calendar.YEAR) == año &&
-                            calEv.get(Calendar.MONTH) == mes &&
-                            calEv.get(Calendar.DAY_OF_MONTH) == dia &&
-                            calHora.get(Calendar.HOUR_OF_DAY) == hora &&
-                            calHora.get(Calendar.MINUTE) == minuto) {
-
-                            // Genera un ID único por evento y minuto
-                            String idEvento = ev.getFecEve() + "_" + ev.getHorEve() + "_" + ev.getTitEve();
-                            if (!eventosNotificados.contains(idEvento)) {
-                                eventosNotificados.add(idEvento);
-
-                                SwingUtilities.invokeLater(() -> {
-                                    reproducirSonidoAlerta();
-                                    mostrarAlertaEvento(ev);
-                                });
-                            }
-                        }
-                    }
-
-                    // Limpia notificaciones viejas cada hora para evitar que crezca mucho el Set
-                    if (eventosNotificados.size() > 1000) {
-                        eventosNotificados.clear();
-                    }
-
-                } catch (Exception ex) {
-                    // Ignora errores para que el hilo siga funcionando
-                }
-            }
-        }).start();
+        // Inicia el notificador de eventos en tiempo real
+        NotificadorEventos notificador = new NotificadorEventos();
+        notificador.start();
     }
 
     private void abrirDialogoEdicion(model.Evento original) {
@@ -568,6 +491,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         // 4) Llamamos al controller PASANDO fechaOrig y horaOrig
         if (eventoController.editarEvento(original, fechaOrig, horaOrig)) {
+            // Actualiza la lista de eventos en memoria para el notificador
+            java.util.List<model.Evento> lista = eventoController.listarEventos(UsuarioActivo.getUsuarioActual().getIdUsu());
+            session.UsuarioActivo.actualizarEventos(lista);
+
             JOptionPane.showMessageDialog(this, "✅ Evento actualizado");
             highlightEventDays();    // <— repinta: quita 12 y marca 13
             cargarEventosEnTabla(
