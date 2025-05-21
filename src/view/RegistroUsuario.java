@@ -392,7 +392,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
         // TODO add your handling code here:
         this.dispose(); // Cierra la ventana de registro
-        new LoginUsuario().setVisible(true); // Abre la ventana de login
     }//GEN-LAST:event_jBtnLoginActionPerformed
 
     private String capitalizar(String texto) {

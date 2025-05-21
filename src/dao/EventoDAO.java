@@ -14,8 +14,9 @@ public class EventoDAO {
 
     public List<Evento> obtenerEventosPorUsuario(String idUsuario) {
         List<Evento> lista = new ArrayList<>();
-
+        // se utiliza ORDER BY <parametro1> DESC, <parametro2> DESC
         String sql = "SELECT * FROM EVENTOS WHERE ID_USU_PER = ? ORDER BY FEC_EVE DESC, HOR_EVE DESC";
+        // Puede estar las sentencias que me generen espciones entre parentecis del bloque try
         try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, idUsuario);
             ResultSet rs = ps.executeQuery();

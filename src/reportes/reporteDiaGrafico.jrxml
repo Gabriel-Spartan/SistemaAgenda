@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_eventos_dia" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2c05bfb4-7818-4d11-9f06-9a85597eec64">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="170"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="usuario_id" class="java.lang.String"/>
+	<parameter name="fecha" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT 
+    COALESCE(f.franja, 'Sin datos') AS FRANJA_HORARIA,
+    COALESCE(COUNT(E.HOR_EVE), 0) AS CANTIDAD
+FROM 
+    (
+        SELECT 'Madrugada (00:00-06:00)' AS franja, 0 AS ini, 6 AS fin
+        UNION
+        SELECT 'Mañana (06:00-12:00)', 6, 12
+        UNION
+        SELECT 'Tarde (12:00-18:00)', 12, 18
+        UNION
+        SELECT 'Noche (18:00-00:00)', 18, 24
+    ) f
+LEFT JOIN EVENTOS E
+    ON 
+        E.HOR_EVE IS NOT NULL AND
+        HOUR(E.HOR_EVE) >= f.ini AND
+        HOUR(E.HOR_EVE) < f.fin AND
+        E.FEC_EVE = $P{fecha} AND 
+        E.ID_USU_PER = $P{usuario_id} 
+GROUP BY f.franja
+ORDER BY f.ini;
+]]>
+	</queryString>
+	<field name="CANTIDAD" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FRANJA_HORARIA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="312" height="33" uuid="3a9ff64a-ea75-46ea-a3ae-e65d1d6dd757"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Reporte Gráfico por Día]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="117" y="46" width="126" height="22" uuid="3e58694c-c56f-4851-8a40-a0f95c2bdb7c"/>
+				<text><![CDATA[Fecha: ]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Detail" x="180" y="46" width="200" height="20" uuid="dbd2d102-787c-428a-bb5f-1c0dea169c6d"/>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="30">
+			<textField evaluationTime="Report">
+				<reportElement x="400" y="0" width="135" height="20" uuid="346a39a2-e84d-4b7d-93a0-f592d8facd2f"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER} + " de " + $V{PAGE_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="400">
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="50" y="20" width="450" height="350" uuid="326b24a2-e84d-4b7d-93a0-f592d8facd2f"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Distribución de Eventos por Franja Horaria"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{FRANJA_HORARIA} == null ? "Sin datos" : $F{FRANJA_HORARIA}]]></keyExpression>
+					<valueExpression><![CDATA[$F{CANTIDAD} == null ? 0 : $F{CANTIDAD}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+	<noData>
+		<band height="10"/>
+	</noData>
+</jasperReport>

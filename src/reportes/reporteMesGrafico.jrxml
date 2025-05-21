@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2c05bfb4-7818-4d11-9f06-9a85597eec64">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.evaluator.ignore.npe" value="false"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="mes" class="java.lang.Integer"/>
+	<parameter name="anio" class="java.lang.Integer"/>
+	<parameter name="usuario_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    E.FEC_EVE AS DIA,
+    DATE_FORMAT(E.FEC_EVE, '%d/%m') AS FECHA_TXT,
+    COUNT(*) AS CANTIDAD
+FROM EVENTOS E
+WHERE
+    MONTH(E.FEC_EVE) = $P{mes}
+    AND YEAR(E.FEC_EVE) = $P{anio}
+    AND E.ID_USU_PER = $P{usuario_id}
+GROUP BY E.FEC_EVE
+ORDER BY E.FEC_EVE;]]>
+	</queryString>
+	<field name="DIA" class="java.sql.Date"/>
+	<field name="FECHA_TXT" class="java.lang.String"/>
+	<field name="CANTIDAD" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="3a9ff64a-ea75-46ea-a3ae-e65d1d6dd757"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Reportes por Mes]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="5c757ce6-d19a-48e7-b3d5-087cccd206ce"/>
+				<textFieldExpression><![CDATA[$F{DIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="87" height="20" uuid="7c25f9b6-fe20-433f-9c35-45844ee9b44f"/>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="120" height="20" uuid="f09eef27-0f5b-4932-a0bc-9afadf1b06ae"/>
+				<textFieldExpression><![CDATA[$F{FECHA_TXT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="4" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="106d080e-d8cd-4e34-97e7-d46a39b9bd3c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="4f12d208-7bf6-48f8-b325-b95f4555953b"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="346a39a2-e84d-4b7d-93a0-f592d8facd2f"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="dbd2d102-787c-428a-bb5f-1c0dea169c6d"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="400" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="0" y="0" width="553" height="400" uuid="101b2858-f91e-477a-a49f-4193640de675"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Días con el N# de Eventos"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{FECHA_TXT} != null ? $F{FECHA_TXT} : "Sin Fecha"]]></categoryExpression>
+						<valueExpression><![CDATA[$F{CANTIDAD} != null ? $F{CANTIDAD} : 0]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

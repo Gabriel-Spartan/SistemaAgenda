@@ -10,7 +10,7 @@ public class UsuarioActivo {
     private static List<Evento> eventosDelUsuario;
     //private static List<Evento> eventosDelUsuario;
 
-    private UsuarioActivo() {}
+    private UsuarioActivo() {} // No se permite la instanciacion del objeto ya que todos sus metodos son estaticos
 
     public static void iniciarSesion(Usuario usuario, List<Evento> eventos) {
         usuarioActual = usuario;

@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 X-COMMENT: Main-Class will be added automatically by build
-Main-Class: view.NotificadorTray
-
+Main-Class: view.LoginUsuario
+Class-Path: lib/dotenv-java-2.3.0.jar lib/mysql-connector-j-9.3.0.jar
