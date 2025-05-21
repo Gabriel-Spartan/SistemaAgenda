@@ -9,13 +9,15 @@ import java.sql.SQLException;
 
 public class ConexionBD {
 
+    //Variables de entorno
+    
     private static final Dotenv dotenv = Dotenv.configure()
         .directory("./")        // Ruta al .env (raíz del proyecto)
         .ignoreIfMissing()      // No falla si no existe (opcional)
         .load();
 
     private static final String HOST = dotenv.get("DB_HOST", "localhost");
-    private static final String PORT = dotenv.get("DB_PORT", "3306");
+    private static final String PORT = dotenv.get("DB_PORT", "3309");
     private static final String DB = dotenv.get("DB_NAME", "agenda_db");
     private static final String USER = dotenv.get("DB_USER", "root");
     private static final String PASSWORD = dotenv.get("DB_PASS", "");

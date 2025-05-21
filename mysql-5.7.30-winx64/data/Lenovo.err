@@ -1,0 +1,513 @@
+2025-05-18T01:26:25.926686Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2025-05-18T01:26:26.053021Z 0 [Warning] InnoDB: New log files created, LSN=45790
+2025-05-18T01:26:26.082470Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
+2025-05-18T01:26:26.154842Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 1dc515c4-3387-11f0-a000-a83b761afda4.
+2025-05-18T01:26:26.158562Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
+2025-05-18T01:26:27.688634Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-18T01:26:28.002549Z 1 [Warning] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2025-05-18T02:06:04.575438Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-18T02:06:04.575519Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-18T02:06:04.575550Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-18T02:06:04.576369Z 0 [Note] .\mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 10544 ...
+2025-05-18T02:06:04.577030Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-18T02:06:04.594101Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-18T02:06:04.596175Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-18T02:06:04.596936Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-18T02:06:04.598254Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-18T02:06:04.599863Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-18T02:06:04.600912Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-18T02:06:04.606156Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-18T02:06:04.616727Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-18T02:06:04.664364Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-18T02:06:04.753215Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-18T02:06:04.754639Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-18T02:06:04.770653Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-18T02:06:04.790591Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-18T02:06:04.791869Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-18T02:06:04.792937Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-18T02:06:04.852908Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2629907
+2025-05-18T02:06:04.854722Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-18T02:06:04.854843Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-18T02:06:04.874953Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-18T02:06:04.876058Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-18T02:06:04.880255Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-18T02:06:04.881174Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-18T02:06:04.883008Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-18T02:06:04.884083Z 0 [Note] IPv6 is available.
+2025-05-18T02:06:04.884621Z 0 [Note]   - '::' resolves to '::';
+2025-05-18T02:06:04.885424Z 0 [Note] Server socket created on IP: '::'.
+2025-05-18T02:06:04.889634Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250517 21:06:04
+2025-05-18T02:06:05.033856Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-18T02:06:05.034801Z 0 [Note] 
+2025-05-18T23:13:16.072096Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-18T23:13:16.072914Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-18T23:13:16.072943Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-18T23:13:16.073414Z 0 [Note] .\mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 3120 ...
+2025-05-18T23:13:16.073851Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-18T23:13:16.158898Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-18T23:13:16.166395Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-18T23:13:16.170930Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-18T23:13:16.178395Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-18T23:13:16.184375Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-18T23:13:16.189069Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-18T23:13:16.196890Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-18T23:13:16.210078Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-18T23:13:16.282890Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-18T23:13:16.291338Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2629926
+2025-05-18T23:13:16.298833Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2629935
+2025-05-18T23:13:16.306329Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-18T23:13:16.312331Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-18T23:13:16.623138Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-18T23:13:16.630400Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-18T23:13:16.637600Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-18T23:13:16.655173Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-18T23:13:16.675522Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-18T23:13:16.684748Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-18T23:13:16.691588Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-18T23:13:16.755373Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2629935
+2025-05-18T23:13:16.762570Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-18T23:13:16.762635Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-18T23:13:16.783943Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-18T23:13:16.794881Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-18T23:13:16.802108Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 18:13:16
+2025-05-18T23:13:16.831306Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-18T23:13:16.837660Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-18T23:13:16.859812Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-18T23:13:16.866949Z 0 [Note] IPv6 is available.
+2025-05-18T23:13:16.871133Z 0 [Note]   - '::' resolves to '::';
+2025-05-18T23:13:16.875882Z 0 [Note] Server socket created on IP: '::'.
+2025-05-18T23:13:16.970331Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-18T23:13:16.970902Z 0 [Note] 
+2025-05-18T23:13:45.925121Z 2 [Note] Unknown error 1049
+2025-05-18T23:13:46.002450Z 3 [Note] Unknown error 1049
+2025-05-18T23:14:00.108905Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-18T23:14:00.108973Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-18T23:14:00.108997Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-18T23:14:00.109376Z 0 [Note] .\mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 15772 ...
+2025-05-18T23:14:00.109686Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-18T23:14:00.173092Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-18T23:14:00.180686Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-18T23:14:00.185391Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-18T23:14:00.193239Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-18T23:14:00.199369Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-18T23:14:00.204212Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-18T23:14:00.212051Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-18T23:14:00.225313Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-18T23:14:00.259012Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-18T23:14:00.267377Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2629963
+2025-05-18T23:14:00.274701Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2629972
+2025-05-18T23:14:00.282305Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-18T23:14:00.288502Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-18T23:14:00.462136Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-18T23:14:00.469301Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-18T23:14:00.476583Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-18T23:14:00.494159Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-18T23:14:00.515290Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-18T23:14:00.524565Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-18T23:14:00.531317Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-18T23:14:00.593050Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2629972
+2025-05-18T23:14:00.599990Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-18T23:14:00.600417Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-18T23:14:00.614174Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-18T23:14:00.630663Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-18T23:14:00.632753Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 18:14:00
+2025-05-18T23:14:00.641282Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-18T23:14:00.653152Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-18T23:14:00.662156Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-18T23:14:00.668497Z 0 [Note] IPv6 is available.
+2025-05-18T23:14:00.672779Z 0 [Note]   - '::' resolves to '::';
+2025-05-18T23:14:00.677729Z 0 [Note] Server socket created on IP: '::'.
+2025-05-18T23:14:00.741193Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-18T23:14:00.741764Z 0 [Note] 
+2025-05-18T23:14:26.748256Z 2 [Note] Unknown error 1049
+2025-05-18T23:14:26.809308Z 3 [Note] Unknown error 1049
+2025-05-18T23:22:07.471948Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-18T23:22:07.472003Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-18T23:22:07.472023Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-18T23:22:07.472403Z 0 [Note] .\mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 19140 ...
+2025-05-18T23:22:07.472813Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-18T23:22:07.534398Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-18T23:22:07.541649Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-18T23:22:07.546336Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-18T23:22:07.554041Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-18T23:22:07.560032Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-18T23:22:07.564849Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-18T23:22:07.572389Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-18T23:22:07.586497Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-18T23:22:07.624884Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-18T23:22:07.633509Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2641191
+2025-05-18T23:22:07.640730Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2641200
+2025-05-18T23:22:07.648237Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-18T23:22:07.653968Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-18T23:22:07.815757Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-18T23:22:07.822903Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-18T23:22:07.829942Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-18T23:22:07.847372Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-18T23:22:07.864104Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-18T23:22:07.873100Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-18T23:22:07.879605Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-18T23:22:07.946446Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2641200
+2025-05-18T23:22:07.954994Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-18T23:22:07.955292Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-18T23:22:07.969080Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-18T23:22:07.984706Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-18T23:22:07.986774Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 18:22:07
+2025-05-18T23:22:07.995277Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-18T23:22:08.006865Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-18T23:22:08.015634Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-18T23:22:08.021872Z 0 [Note] IPv6 is available.
+2025-05-18T23:22:08.026050Z 0 [Note]   - '::' resolves to '::';
+2025-05-18T23:22:08.030717Z 0 [Note] Server socket created on IP: '::'.
+2025-05-18T23:22:08.093294Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-18T23:22:08.094415Z 0 [Note] 
+2025-05-18T23:33:43.271608Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-18T23:33:43.271667Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-18T23:33:43.271693Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-18T23:33:43.272252Z 0 [Note] .\mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 15332 ...
+2025-05-18T23:33:43.272750Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-18T23:33:43.338549Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-18T23:33:43.346011Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-18T23:33:43.351059Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-18T23:33:43.358743Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-18T23:33:43.364821Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-18T23:33:43.369943Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-18T23:33:43.377778Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-18T23:33:43.391436Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-18T23:33:43.427763Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-18T23:33:43.436397Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2641721
+2025-05-18T23:33:43.444140Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2641730
+2025-05-18T23:33:43.452100Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-18T23:33:43.458083Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-18T23:33:43.627673Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-18T23:33:43.635210Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-18T23:33:43.642328Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-18T23:33:43.661006Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-18T23:33:43.677844Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-18T23:33:43.687312Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-18T23:33:43.694239Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-18T23:33:43.757078Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2641730
+2025-05-18T23:33:43.765729Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-18T23:33:43.765894Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-18T23:33:43.779755Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-18T23:33:43.796670Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-18T23:33:43.798965Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 18:33:43
+2025-05-18T23:33:43.808075Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-18T23:33:43.820252Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-18T23:33:43.829274Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-18T23:33:43.836005Z 0 [Note] IPv6 is available.
+2025-05-18T23:33:43.840279Z 0 [Note]   - '::' resolves to '::';
+2025-05-18T23:33:43.845158Z 0 [Note] Server socket created on IP: '::'.
+2025-05-18T23:33:43.911666Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-18T23:33:43.917283Z 0 [Note] 
+2025-05-18T23:44:10.346213Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-18T23:44:10.346264Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-18T23:44:10.346285Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-18T23:44:10.346785Z 0 [Note] .\mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 18816 ...
+2025-05-18T23:44:10.347094Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-18T23:44:10.359306Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-18T23:44:10.359899Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-18T23:44:10.360250Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-18T23:44:10.360730Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-18T23:44:10.361397Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-18T23:44:10.361832Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-18T23:44:10.364305Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-18T23:44:10.369239Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-18T23:44:10.402572Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-18T23:44:10.404553Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2642026
+2025-05-18T23:44:10.405094Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2642035
+2025-05-18T23:44:10.405700Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-18T23:44:10.406215Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-18T23:44:10.578510Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-18T23:44:10.579213Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-18T23:44:10.580206Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-18T23:44:10.587916Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-18T23:44:10.604622Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-18T23:44:10.605633Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-18T23:44:10.606430Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-18T23:44:10.672173Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2642035
+2025-05-18T23:44:10.673477Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-18T23:44:10.673537Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-18T23:44:10.682441Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-18T23:44:10.683153Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-18T23:44:10.685026Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-18T23:44:10.685628Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-18T23:44:10.686475Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-18T23:44:10.687109Z 0 [Note] IPv6 is available.
+2025-05-18T23:44:10.687469Z 0 [Note]   - '::' resolves to '::';
+2025-05-18T23:44:10.687880Z 0 [Note] Server socket created on IP: '::'.
+2025-05-18T23:44:10.691137Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 18:44:10
+2025-05-18T23:44:10.747353Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-18T23:44:10.747893Z 0 [Note] 
+2025-05-18T23:50:54.485493Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-18T23:50:54.485557Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-18T23:50:54.485577Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-18T23:50:54.486170Z 0 [Note] .\mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 8436 ...
+2025-05-18T23:50:54.486440Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-18T23:50:54.509680Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-18T23:50:54.510263Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-18T23:50:54.510585Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-18T23:50:54.511039Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-18T23:50:54.511674Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-18T23:50:54.512112Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-18T23:50:54.514484Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-18T23:50:54.519472Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-18T23:50:54.546902Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-18T23:50:54.548894Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2642054
+2025-05-18T23:50:54.549417Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2642063
+2025-05-18T23:50:54.549889Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-18T23:50:54.550299Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-18T23:50:54.717501Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-18T23:50:54.718211Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-18T23:50:54.719031Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-18T23:50:54.726941Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-18T23:50:54.743205Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-18T23:50:54.743952Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-18T23:50:54.744670Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-18T23:50:54.796021Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2642063
+2025-05-18T23:50:54.796843Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-18T23:50:54.796913Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-18T23:50:54.805906Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-18T23:50:54.806620Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-18T23:50:54.808519Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-18T23:50:54.809084Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-18T23:50:54.809857Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-18T23:50:54.810419Z 0 [Note] IPv6 is available.
+2025-05-18T23:50:54.810708Z 0 [Note]   - '::' resolves to '::';
+2025-05-18T23:50:54.811102Z 0 [Note] Server socket created on IP: '::'.
+2025-05-18T23:50:54.812208Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 18:50:54
+2025-05-18T23:50:54.876927Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-18T23:50:54.877624Z 0 [Note] 
+2025-05-19T00:42:07.654228Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-19T00:42:07.654285Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-19T00:42:07.654307Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-19T00:42:07.654870Z 0 [Note] mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 11104 ...
+2025-05-19T00:42:07.655251Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-19T00:42:07.688222Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-19T00:42:07.688808Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-19T00:42:07.689152Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-19T00:42:07.689625Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-19T00:42:07.690263Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-19T00:42:07.690694Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-19T00:42:07.693095Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-19T00:42:07.697822Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-19T00:42:07.725056Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-19T00:42:07.726906Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2642082
+2025-05-19T00:42:07.727393Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2642091
+2025-05-19T00:42:07.727960Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-19T00:42:07.728358Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-19T00:42:07.897189Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-19T00:42:07.897843Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-19T00:42:07.898754Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-19T00:42:07.906940Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-19T00:42:07.918843Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-19T00:42:07.919577Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-19T00:42:07.920225Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-19T00:42:07.978300Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2642091
+2025-05-19T00:42:07.979274Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-19T00:42:07.979347Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-19T00:42:07.987978Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-19T00:42:07.988696Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-19T00:42:07.990760Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-19T00:42:07.991322Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-19T00:42:07.992358Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-19T00:42:07.992971Z 0 [Note] IPv6 is available.
+2025-05-19T00:42:07.993302Z 0 [Note]   - '::' resolves to '::';
+2025-05-19T00:42:07.993710Z 0 [Note] Server socket created on IP: '::'.
+2025-05-19T00:42:07.994849Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 19:42:07
+2025-05-19T00:42:08.045804Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-19T00:42:08.046391Z 0 [Note] 
+2025-05-19T00:44:02.089498Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-19T00:44:02.089551Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-19T00:44:02.089574Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-19T00:44:02.090008Z 0 [Note] mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 4256 ...
+2025-05-19T00:44:02.090313Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-19T00:44:02.136609Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-19T00:44:02.137225Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-19T00:44:02.137611Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-19T00:44:02.138132Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-19T00:44:02.138824Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-19T00:44:02.139298Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-19T00:44:02.141985Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-19T00:44:02.147862Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-19T00:44:02.187645Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-19T00:44:02.190503Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2642110
+2025-05-19T00:44:02.191138Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2642119
+2025-05-19T00:44:02.191726Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-19T00:44:02.192202Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-19T00:44:02.351083Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-19T00:44:02.351757Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-19T00:44:02.352615Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-19T00:44:02.360442Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-19T00:44:02.373195Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-19T00:44:02.373901Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-19T00:44:02.374564Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-19T00:44:02.426018Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2642119
+2025-05-19T00:44:02.426996Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-19T00:44:02.427100Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-19T00:44:02.435392Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-19T00:44:02.436054Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-19T00:44:02.437743Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-19T00:44:02.438263Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-19T00:44:02.439049Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-19T00:44:02.439599Z 0 [Note] IPv6 is available.
+2025-05-19T00:44:02.439895Z 0 [Note]   - '::' resolves to '::';
+2025-05-19T00:44:02.440280Z 0 [Note] Server socket created on IP: '::'.
+2025-05-19T00:44:02.442617Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 19:44:02
+2025-05-19T00:44:02.486742Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-19T00:44:02.487329Z 0 [Note] 
+2025-05-19T00:46:20.995736Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-19T00:46:20.995786Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-19T00:46:20.995804Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-19T00:46:20.996186Z 0 [Note] mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 7796 ...
+2025-05-19T00:46:20.996495Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-19T00:46:21.051457Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-19T00:46:21.052047Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-19T00:46:21.052368Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-19T00:46:21.052824Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-19T00:46:21.053462Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-19T00:46:21.053912Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-19T00:46:21.056349Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-19T00:46:21.060925Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-19T00:46:21.094966Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-19T00:46:21.099762Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2642147
+2025-05-19T00:46:21.100305Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2642156
+2025-05-19T00:46:21.100880Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-19T00:46:21.101353Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-19T00:46:21.269656Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-19T00:46:21.270298Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-19T00:46:21.271208Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-19T00:46:21.279562Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-19T00:46:21.298529Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-19T00:46:21.299287Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-19T00:46:21.299926Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-19T00:46:21.353180Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2642156
+2025-05-19T00:46:21.354176Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-19T00:46:21.354280Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-19T00:46:21.362078Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-19T00:46:21.362721Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-19T00:46:21.364413Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-19T00:46:21.364913Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-19T00:46:21.365666Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-19T00:46:21.366233Z 0 [Note] IPv6 is available.
+2025-05-19T00:46:21.366550Z 0 [Note]   - '::' resolves to '::';
+2025-05-19T00:46:21.366930Z 0 [Note] Server socket created on IP: '::'.
+2025-05-19T00:46:21.368595Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 19:46:21
+2025-05-19T00:46:21.411856Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-19T00:46:21.412414Z 0 [Note] 
+2025-05-19T00:47:00.344565Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-19T00:47:00.344653Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-19T00:47:00.344680Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-19T00:47:00.345442Z 0 [Note] mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 18716 ...
+2025-05-19T00:47:00.346035Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-19T00:47:00.409870Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-19T00:47:00.411917Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-19T00:47:00.412250Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-19T00:47:00.412719Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-19T00:47:00.413348Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-19T00:47:00.413779Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-19T00:47:00.416030Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-19T00:47:00.420455Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-19T00:47:00.453591Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-19T00:47:00.457553Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2642175
+2025-05-19T00:47:00.458056Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2642184
+2025-05-19T00:47:00.458507Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-19T00:47:00.458875Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-19T00:47:00.629302Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-19T00:47:00.629960Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-19T00:47:00.630831Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-19T00:47:00.638956Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-19T00:47:00.650802Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-19T00:47:00.651511Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-19T00:47:00.652152Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-19T00:47:00.712719Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2642184
+2025-05-19T00:47:00.713910Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-19T00:47:00.714065Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-19T00:47:00.722130Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-19T00:47:00.722828Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-19T00:47:00.724631Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-19T00:47:00.725182Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-19T00:47:00.725983Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-19T00:47:00.726575Z 0 [Note] IPv6 is available.
+2025-05-19T00:47:00.726914Z 0 [Note]   - '::' resolves to '::';
+2025-05-19T00:47:00.727324Z 0 [Note] Server socket created on IP: '::'.
+2025-05-19T00:47:00.730084Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 19:47:00
+2025-05-19T00:47:00.771528Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-19T00:47:00.772089Z 0 [Note] 
+2025-05-19T01:11:08.927534Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-19T01:11:08.927627Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-19T01:11:08.927657Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-19T01:11:08.928491Z 0 [Note] .\mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 13492 ...
+2025-05-19T01:11:08.929138Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-19T01:11:09.058510Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-19T01:11:09.071243Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-19T01:11:09.079788Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-19T01:11:09.081540Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-19T01:11:09.082743Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-19T01:11:09.083534Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-19T01:11:09.088547Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-19T01:11:09.097598Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-19T01:11:09.147665Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-19T01:11:09.151560Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2642203
+2025-05-19T01:11:09.152702Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2642212
+2025-05-19T01:11:09.153508Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-19T01:11:09.154184Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-19T01:11:09.366374Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-19T01:11:09.367684Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-19T01:11:09.369809Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-19T01:11:09.386035Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-19T01:11:09.405657Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-19T01:11:09.406743Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-19T01:11:09.408032Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-19T01:11:09.473962Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2642212
+2025-05-19T01:11:09.475964Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-19T01:11:09.476067Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-19T01:11:09.490329Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-19T01:11:09.491671Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-19T01:11:09.495139Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-19T01:11:09.496007Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-19T01:11:09.497285Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-19T01:11:09.498295Z 0 [Note] IPv6 is available.
+2025-05-19T01:11:09.498802Z 0 [Note]   - '::' resolves to '::';
+2025-05-19T01:11:09.499474Z 0 [Note] Server socket created on IP: '::'.
+2025-05-19T01:11:09.503427Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 20:11:09
+2025-05-19T01:11:09.584053Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-19T01:11:09.585194Z 0 [Note] 
+2025-05-19T01:18:00.652990Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'ERROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will be merged with strict mode in a future release.
+2025-05-19T01:18:00.653051Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not set.
+2025-05-19T01:18:00.653074Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2025-05-19T01:18:00.653736Z 0 [Note] .\mysql-5.7.30-winx64\bin\mysqld.exe (mysqld 5.7.30) starting as process 20564 ...
+2025-05-19T01:18:00.654045Z 0 [ERROR] Can't find error-message file 'C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64 hare\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2025-05-19T01:18:00.718736Z 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2025-05-19T01:18:00.726462Z 0 [Note] InnoDB: Uses event mutexes
+2025-05-19T01:18:00.731275Z 0 [Note] InnoDB: _mm_lfence() and _mm_sfence() are used for memory barrier
+2025-05-19T01:18:00.738984Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2025-05-19T01:18:00.743526Z 0 [Note] InnoDB: Number of pools: 1
+2025-05-19T01:18:00.743938Z 0 [Note] InnoDB: Not using CPU crc32 instructions
+2025-05-19T01:18:00.746139Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2025-05-19T01:18:00.750660Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2025-05-19T01:18:00.782507Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2025-05-19T01:18:00.784547Z 0 [Note] InnoDB: Log scan progressed past the checkpoint lsn 2642231
+2025-05-19T01:18:00.785112Z 0 [Note] InnoDB: Doing recovery: scanned up to log sequence number 2642240
+2025-05-19T01:18:00.785668Z 0 [Note] InnoDB: Database was not shutdown normally!
+2025-05-19T01:18:00.786095Z 0 [Note] InnoDB: Starting crash recovery.
+2025-05-19T01:18:00.955415Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2025-05-19T01:18:00.956232Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2025-05-19T01:18:00.957231Z 0 [Note] InnoDB: Setting file '.\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2025-05-19T01:18:00.965128Z 0 [Note] InnoDB: File '.\ibtmp1' size is now 12 MB.
+2025-05-19T01:18:00.976716Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2025-05-19T01:18:00.977412Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2025-05-19T01:18:00.978051Z 0 [Note] InnoDB: Waiting for purge to start
+2025-05-19T01:18:01.034456Z 0 [Note] InnoDB: 5.7.30 started; log sequence number 2642240
+2025-05-19T01:18:01.035465Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2025-05-19T01:18:01.035557Z 0 [Note] InnoDB: Loading buffer pool(s) from C:\Users\gabri\OneDrive\Documents\NetBeansProjects\SistemaAgenda\mysql-5.7.30-winx64\data\ib_buffer_pool
+2025-05-19T01:18:01.044042Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2025-05-19T01:18:01.044747Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+2025-05-19T01:18:01.046569Z 0 [Warning] CA certificate ca.pem is self signed.
+2025-05-19T01:18:01.047130Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+2025-05-19T01:18:01.047975Z 0 [Note] Server hostname (bind-address): '*'; port: 3309
+2025-05-19T01:18:01.048584Z 0 [Note] IPv6 is available.
+2025-05-19T01:18:01.048959Z 0 [Note]   - '::' resolves to '::';
+2025-05-19T01:18:01.049581Z 0 [Note] Server socket created on IP: '::'.
+2025-05-19T01:18:01.051661Z 0 [Note] InnoDB: Buffer pool(s) load completed at 250518 20:18:01
+2025-05-19T01:18:01.094145Z 0 [Note] Event Scheduler: Loaded 0 events
+2025-05-19T01:18:01.094686Z 0 [Note] 

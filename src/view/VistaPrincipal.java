@@ -11,15 +11,10 @@ import exception.ExcepcionVista;
 import javax.swing.*;
 import java.awt.*;
 import com.toedter.calendar.JCalendar;
-import java.awt.GridLayout;
 import java.util.Calendar;
-import javax.swing.SwingUtilities;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.Set;
 import javax.sound.sampled.*;
 
 public class VistaPrincipal extends javax.swing.JFrame {
@@ -106,6 +101,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAgendar.setBackground(new Color(135, 178, 158));
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnAgendar.setBackground(new Color(96, 187, 144));
             }
@@ -121,16 +117,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 // 2) Mostrar diálogo
                 EventoDialog dlg = new EventoDialog(this);
                 dlg.setVisible(true);
-                if (!dlg.isConfirmado()) return;
+                if (!dlg.isConfirmado()) {
+                    return;
+                }
 
                 // 3) Construir evento
                 String idUsu = session.UsuarioActivo.getUsuarioActual().getIdUsu();
                 model.Evento ev = new model.Evento(
-                    idUsu,
-                    fecha,
-                    dlg.getHora(),
-                    dlg.getTitulo(),
-                    dlg.getDescripcion()
+                        idUsu,
+                        fecha,
+                        dlg.getHora(),
+                        dlg.getTitulo(),
+                        dlg.getDescripcion()
                 );
 
                 // 4) Guardar y refrescar tabla
@@ -143,14 +141,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "✅ Evento creado correctamente");
                 } else {
                     JOptionPane.showMessageDialog(this,
-                        "❌ Error al insertar",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                            "❌ Error al insertar",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(this,
-                    "❌ Error:\n" + ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "❌ Error:\n" + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -261,17 +259,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnEditarEvento.addActionListener(e -> {
             Date fechaSel = calendario.getDate();
             List<model.Evento> evs = eventoController
-                .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaSel);
-            if (evs.isEmpty()) return;
+                    .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaSel);
+            if (evs.isEmpty()) {
+                return;
+            }
 
             // 1) Crear diálogo selector
             JDialog dlgSel = new JDialog(this, "Seleccionar evento", true);
-            dlgSel.setLayout(new BorderLayout(5,5));
+            dlgSel.setLayout(new BorderLayout(5, 5));
 
             // 1.1) Tabla de eventos
             DefaultTableModel mdl = new DefaultTableModel(
-                new String[]{"Hora","Título","Descripción"}, 0);
-            for (model.Evento ev: evs) {
+                    new String[]{"Hora", "Título", "Descripción"}, 0);
+            for (model.Evento ev : evs) {
                 mdl.addRow(new Object[]{
                     ev.getHorEve().toLocalTime().toString(),
                     ev.getTitEve(),
@@ -303,8 +303,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
             btnOk.addActionListener(ev2 -> {
                 int idx = tbl.getSelectedRow();
                 model.Evento original = evs.get(idx);
-                java.sql.Date  fechaOrig = original.getFecEve();
-                java.sql.Time  horaOrig  = original.getHorEve();
+                java.sql.Date fechaOrig = original.getFecEve();
+                java.sql.Time horaOrig = original.getHorEve();
 
                 dlgSel.dispose();
 
@@ -316,7 +316,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 dlgEdit.setHora(original.getHorEve());
                 dlgEdit.setVisible(true);
 
-                if (!dlgEdit.isConfirmado()) return;
+                if (!dlgEdit.isConfirmado()) {
+                    return;
+                }
 
                 // extrae nuevos valores
                 original.setTitEve(dlgEdit.getTitulo());
@@ -333,14 +335,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "✅ Evento actualizado");
                     highlightEventDays();    // <— repinta: quita 12 y marca 13
                     cargarEventosEnTabla(
-                        eventoController.listarEventosPorFecha(
-                            UsuarioActivo.getUsuarioActual().getIdUsu(),
-                            calendario.getDate()
-                        )
+                            eventoController.listarEventosPorFecha(
+                                    UsuarioActivo.getUsuarioActual().getIdUsu(),
+                                    calendario.getDate()
+                            )
                     );
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error al actualizar", 
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Error al actualizar",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 }
             });
 
@@ -354,17 +356,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnEliminarEvento.addActionListener(e -> {
             Date fechaSel = calendario.getDate();
             List<model.Evento> evs = eventoController
-                .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaSel);
-            if (evs.isEmpty()) return;
+                    .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fechaSel);
+            if (evs.isEmpty()) {
+                return;
+            }
 
             // 1) Crear diálogo selector
             JDialog dlgSel = new JDialog(this, "Eliminar evento", true);
-            dlgSel.setLayout(new BorderLayout(5,5));
+            dlgSel.setLayout(new BorderLayout(5, 5));
 
             // 1.1) Tabla de eventos
             DefaultTableModel mdl = new DefaultTableModel(
-                new String[]{"Hora","Título","Descripción"}, 0);
-            for (model.Evento ev: evs) {
+                    new String[]{"Hora", "Título", "Descripción"}, 0);
+            for (model.Evento ev : evs) {
                 mdl.addRow(new Object[]{
                     ev.getHorEve().toLocalTime().toString(),
                     ev.getTitEve(),
@@ -376,7 +380,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             dlgSel.add(new JScrollPane(tbl), BorderLayout.CENTER);
 
             // 1.2) Panel de botones “Eliminar” / “Cancelar”
-            JButton btnDel    = new JButton("Eliminar");
+            JButton btnDel = new JButton("Eliminar");
             JButton btnCancel = new JButton("Cancelar");
             btnDel.setEnabled(false);
             JPanel pnlBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
@@ -385,8 +389,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
             dlgSel.add(pnlBtns, BorderLayout.SOUTH);
 
             // 2) Habilitar “Eliminar” sólo cuando haya selección
-            tbl.getSelectionModel().addListSelectionListener(evsel ->
-                btnDel.setEnabled(tbl.getSelectedRow() >= 0)
+            tbl.getSelectionModel().addListSelectionListener(evsel
+                    -> btnDel.setEnabled(tbl.getSelectedRow() >= 0)
             );
 
             // 3) Cancelar
@@ -401,7 +405,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                         "¿Eliminar el evento seleccionado?",
                         "Confirmar",
                         JOptionPane.YES_NO_OPTION
-                    ) == JOptionPane.YES_OPTION) {
+                ) == JOptionPane.YES_OPTION) {
 
                     if (eventoController.eliminarEvento(original)) {
                         // Actualiza la lista de eventos en memoria para el notificador
@@ -410,17 +414,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "✅ Evento eliminado");
                         highlightEventDays();
                         cargarEventosEnTabla(
-                            eventoController.listarEventosPorFecha(
-                                UsuarioActivo.getUsuarioActual().getIdUsu(),
-                                calendario.getDate()
-                            )
+                                eventoController.listarEventosPorFecha(
+                                        UsuarioActivo.getUsuarioActual().getIdUsu(),
+                                        calendario.getDate()
+                                )
                         );
                         dlgSel.dispose();
                     } else {
                         JOptionPane.showMessageDialog(
-                            this,
-                            "❌ Error al eliminar",
-                            "Error", JOptionPane.ERROR_MESSAGE
+                                this,
+                                "❌ Error al eliminar",
+                                "Error", JOptionPane.ERROR_MESSAGE
                         );
                     }
                 }
@@ -489,7 +493,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void abrirDialogoEdicion(model.Evento original) {
         // 1) Guardamos los valores antiguos para el WHERE
         java.sql.Date fechaOrig = original.getFecEve();
-        java.sql.Time horaOrig   = original.getHorEve();
+        java.sql.Time horaOrig = original.getHorEve();
 
         // 2) Abrimos el diálogo de edición
         EditarEventoDialog dlg = new EditarEventoDialog(this);
@@ -498,7 +502,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         dlg.setFecha(original.getFecEve());
         dlg.setHora(original.getHorEve());
         dlg.setVisible(true);
-        if (!dlg.isConfirmado()) return;
+        if (!dlg.isConfirmado()) {
+            return;
+        }
 
         // 3) Actualizamos el objeto con los nuevos valores
         original.setTitEve(dlg.getTitulo());
@@ -515,14 +521,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "✅ Evento actualizado");
             highlightEventDays();    // <— repinta: quita 12 y marca 13
             cargarEventosEnTabla(
-                eventoController.listarEventosPorFecha(
-                    UsuarioActivo.getUsuarioActual().getIdUsu(),
-                    calendario.getDate()
-                )
+                    eventoController.listarEventosPorFecha(
+                            UsuarioActivo.getUsuarioActual().getIdUsu(),
+                            calendario.getDate()
+                    )
             );
         } else {
             JOptionPane.showMessageDialog(this, "❌ Error al actualizar",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -549,8 +555,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     /**
-     * Recorre los días del mes que muestra el calendario y pinta
-     * de verde aquellos que tengan un evento en UsuarioActivo.
+     * Recorre los días del mes que muestra el calendario y pinta de verde
+     * aquellos que tengan un evento en UsuarioActivo.
      */
     private void highlightEventDays() {
         Calendar cal = Calendar.getInstance();
@@ -562,7 +568,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         // 2) Recorre todos los botones de día y resetea su color y borde
         for (Component comp : calendario.getDayChooser().getDayPanel().getComponents()) {
-            if (!(comp instanceof JButton)) continue;
+            if (!(comp instanceof JButton)) {
+                continue;
+            }
             JButton btn = (JButton) comp;
             btn.setOpaque(false);
             btn.setBackground(calendario.getBackground());
@@ -572,10 +580,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         // 3) Vuelve a colorear sólo los días con eventos
         for (model.Evento e : todos) {
             cal.setTime(e.getFecEve());
-            if (cal.get(Calendar.MONTH) != mes || cal.get(Calendar.YEAR) != año) continue;
+            if (cal.get(Calendar.MONTH) != mes || cal.get(Calendar.YEAR) != año) {
+                continue;
+            }
             int día = cal.get(Calendar.DAY_OF_MONTH);
             for (Component comp : calendario.getDayChooser().getDayPanel().getComponents()) {
-                if (comp instanceof JButton && ((JButton)comp).getText().equals(String.valueOf(día))) {
+                if (comp instanceof JButton && ((JButton) comp).getText().equals(String.valueOf(día))) {
                     JButton btn = (JButton) comp;
                     btn.setOpaque(true);
                     btn.setBackground(new Color(135, 178, 158));
@@ -588,7 +598,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         cal.setTime(calendario.getDate());
         int diaSel = cal.get(Calendar.DAY_OF_MONTH);
         for (Component comp : calendario.getDayChooser().getDayPanel().getComponents()) {
-            if (comp instanceof JButton && ((JButton)comp).getText().equals(String.valueOf(diaSel))) {
+            if (comp instanceof JButton && ((JButton) comp).getText().equals(String.valueOf(diaSel))) {
                 JButton btn = (JButton) comp;
                 btn.setOpaque(true);
                 btn.setBackground(new Color(255, 223, 127)); // Amarillo suave para el seleccionado
@@ -600,13 +610,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void mostrarEventosDelDia(Date fecha) {
         List<model.Evento> evs = eventoController
-            .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fecha);
-        if (evs.isEmpty()) return;
+                .listarEventosPorFecha(UsuarioActivo.getUsuarioActual().getIdUsu(), fecha);
+        if (evs.isEmpty()) {
+            return;
+        }
 
-        JDialog dlg = new JDialog(this, 
-            "Eventos del " + new SimpleDateFormat("yyyy-MM-dd").format(fecha), true);
+        JDialog dlg = new JDialog(this,
+                "Eventos del " + new SimpleDateFormat("yyyy-MM-dd").format(fecha), true);
         DefaultTableModel mdl = new DefaultTableModel(
-            new String[]{"Hora","Título","Descripción"}, 0);
+                new String[]{"Hora", "Título", "Descripción"}, 0);
         for (model.Evento ev : evs) {
             mdl.addRow(new Object[]{
                 ev.getHorEve().toLocalTime().toString(),
@@ -631,7 +643,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void reproducirSonidoAlerta() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                getClass().getResource("/resources/sounds/The-big-adventure-Google-Android-8-Ringtone.wav"));
+                    getClass().getResource("/resources/sounds/The-big-adventure-Google-Android-8-Ringtone.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -649,7 +661,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 Image img = new ImageIcon(url).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 icono = new ImageIcon(img);
             }
-        } catch (Exception e) { /* ignora */ }
+        } catch (Exception e) {
+            /* ignora */ }
 
         // Panel personalizado
         JPanel panel = new JPanel();
@@ -667,7 +680,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         Clip clip = null;
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                getClass().getResource("/resources/sounds/The-big-adventure-Google-Android-8-Ringtone.wav"));
+                    getClass().getResource("/resources/sounds/The-big-adventure-Google-Android-8-Ringtone.wav"));
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY); // Sonido en bucle hasta que se cierre el mensaje
@@ -677,11 +690,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
 
         JOptionPane.showMessageDialog(
-            this,
-            panel,
-            "⏰ Recordatorio de Evento",
-            JOptionPane.WARNING_MESSAGE,
-            icono
+                this,
+                panel,
+                "⏰ Recordatorio de Evento",
+                JOptionPane.WARNING_MESSAGE,
+                icono
         );
 
         // Detener el sonido solo cuando se cierre el mensaje
@@ -708,6 +721,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jSpnAnio = new javax.swing.JSpinner();
         jBtnReporteMes = new javax.swing.JButton();
         jBtnReporteDia = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -753,7 +771,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(193, Short.MAX_VALUE))))
+                        .addContainerGap(332, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -772,18 +790,43 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jTabbedPane1.addTab("Eventos", jPanel3);
 
         jCbxDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCbxDias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCbxDiasActionPerformed(evt);
+            }
+        });
 
-        jBtnReporteMes.setText("Reporte por Mes");
+        jBtnReporteMes.setText("Reporte");
         jBtnReporteMes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnReporteMesActionPerformed(evt);
             }
         });
 
-        jBtnReporteDia.setText("Reporte por Día");
+        jBtnReporteDia.setText("Reporte");
         jBtnReporteDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnReporteDiaActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Reporte con Grafico");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Reporte por Día");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setText("Reporte por Mes");
+
+        jButton2.setText("Reporte con Grafico");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -791,43 +834,55 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(73, 73, 73)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jDchReporteDia, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(32, 32, 32)
-                            .addComponent(jCbxDias, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(30, 30, 30)
-                            .addComponent(jSpnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(35, 35, 35)
-                            .addComponent(jBtnReporteDia)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jBtnReporteMes)
-                            .addGap(30, 30, 30)))
-                    .addGap(73, 73, 73)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jBtnReporteDia)
+                                .addGap(40, 40, 40)
+                                .addComponent(jButton2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jCbxDias, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSpnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jBtnReporteMes)
+                                .addGap(33, 33, 33)
+                                .addComponent(jButton1))
+                            .addComponent(jDchReporteDia, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(146, 146, 146)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jCbxDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jDchReporteDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jSpnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(36, 36, 36)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jBtnReporteMes)
-                        .addComponent(jBtnReporteDia))
-                    .addContainerGap(146, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addGap(28, 28, 28)
+                .addComponent(jDchReporteDia, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnReporteDia)
+                    .addComponent(jButton2))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCbxDias, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpnAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnReporteMes)
+                    .addComponent(jButton1))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reportes", jPanel1);
@@ -872,7 +927,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this,
-                    "❌ Error inesperado al generar el reporte por mes.\n" + e.getMessage(),
+                    "❌ Error inesperado al generar el reporte por día.\n" + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBtnReporteDiaActionPerformed
@@ -891,17 +946,57 @@ public class VistaPrincipal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
 
+    private void jCbxDiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbxDiasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCbxDiasActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            Date fecha = jDchReporteDia.getDate();
+            controller.ReporteController.graficoPorDia(fecha);
+        } catch (ExcepcionVista ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), ex.getTitulo(), JOptionPane.WARNING_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "❌ Error inesperado al generar el reporte por día.\n" + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            int mes = jCbxDias.getSelectedIndex() + 1;
+            int anio = (int) jSpnAnio.getValue();
+
+            ReporteController.graficoPorMes(mes, anio);
+
+        } catch (ExcepcionVista ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), ex.getTitulo(), JOptionPane.WARNING_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "❌ Error inesperado al generar el reporte por mes.\n" + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnReporteDia;
     private javax.swing.JButton jBtnReporteMes;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jCbxDias;
     private com.toedter.calendar.JDateChooser jDchReporteDia;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLblUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner jSpnAnio;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTblEventos;

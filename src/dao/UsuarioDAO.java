@@ -48,12 +48,12 @@ public class UsuarioDAO {
         String sql = "SELECT * FROM USUARIOS WHERE ID_USU = ?";
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
+            
             ps.setString(1, cedula);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return new Usuario(
+                return new Usuario( // Retorna al usuario encontrado
                     rs.getString("ID_USU"),
                     rs.getString("NOM_USU"),
                     rs.getString("APE_USU"),

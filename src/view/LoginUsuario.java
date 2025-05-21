@@ -5,7 +5,15 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class LoginUsuario extends javax.swing.JFrame {
@@ -149,15 +157,36 @@ public class LoginUsuario extends javax.swing.JFrame {
     }
 
     //BackEnd
-    private void realizarLogin() {
-        String cedula = jTxtCedula.getText().trim();
-        String contrasena = new String(jPwdContrasenia.getPassword()).trim();
+    private void realizarLogin() throws IOException {
+        String cedula = jTxtCedula.getText().trim();  // Obtener la cedula
+        String contrasena = new String(jPwdContrasenia.getPassword()).trim(); //Obtener la contraseña
 
         LoginController controller = new LoginController();
         String mensaje = controller.iniciarSesion(cedula, contrasena);
 
         if (mensaje.startsWith("✅")) {
-            mostrarExitoConImagen("Inicio de sesión exitoso. ¡Bienvenido!");
+            try {
+                ProcessBuilder pb = new ProcessBuilder(
+                        "java", "-cp", "NotificadorTray.jar;lib/*", "view.NotificadorTray"
+                );
+                pb.redirectErrorStream(true); // Combina error y salida
+                Process proceso = pb.start();
+
+                // Leer la salida del proceso
+                new Thread(() -> {
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
+                        String linea;
+                        while ((linea = reader.readLine()) != null) {
+                            System.out.println("[NotificadorTray] " + linea);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Files.write(Paths.get("session.txt"), cedula.getBytes(StandardCharsets.UTF_8));
             this.dispose();
             new VistaPrincipal().setVisible(true);
         } else {
@@ -277,7 +306,11 @@ public class LoginUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnRegistrarseActionPerformed
 
     private void jBtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIngresarActionPerformed
-        realizarLogin();
+        try {
+            realizarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jBtnIngresarActionPerformed
 
     private void jTxtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtCedulaKeyTyped
@@ -303,10 +336,14 @@ public class LoginUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbVerContraseniaActionPerformed
 
     private void jPwdContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPwdContraseniaActionPerformed
-        //si el foco está en jPwdContrasenia y se presiona Enter, se ejecutará la lógica de 
-        //autenticación directamente, manteniendo el mismo flujo que si se presionara el botón Ingresar.
+        try {
+            //si el foco está en jPwdContrasenia y se presiona Enter, se ejecutará la lógica de
+            //autenticación directamente, manteniendo el mismo flujo que si se presionara el botón Ingresar.
 
-        realizarLogin();
+            realizarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jPwdContraseniaActionPerformed
 
     /**

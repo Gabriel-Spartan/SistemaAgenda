@@ -24,7 +24,7 @@ public class LoginController {
         dao.UsuarioDAO usuarioDAO = new dao.UsuarioDAO();
         dao.EventoDAO eventoDAO = new dao.EventoDAO();
 
-        model.Usuario usuario = usuarioDAO.obtenerPorCedula(cedula);
+        model.Usuario usuario = usuarioDAO.obtenerPorCedula(cedula); //Obtener el usuario a travez de la cedula
         if (usuario == null || !usuario.getConUsu().equals(contrasena)) {
             return "❌ Credenciales inválidas.";
         }
